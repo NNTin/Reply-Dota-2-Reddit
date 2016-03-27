@@ -37,13 +37,12 @@ def averageLastXGames(playerID, amount, detailedAnalysis):
 
 
     for i in range(q.qsize()):
-        print('[averagelastxgames] put everything into an array')
+        if message: print('[averagelastxgames] put everything into an array')
         detailedMatch = q.get()
         detailedMatches.append(detailedMatch)
         if (int(q.qsize()) == 0):
             break
 
-    print(detailedMatches)
 
     if(len(detailedMatches) != len(matches)):
         print('[averagelastxgames] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
@@ -230,7 +229,7 @@ def analyzeMatches(playerID, detailedMatches):
 
 
                             else:
-                                print('you radiant, dire win')
+                                nothing = 5
 
                         else:
                             analysis['enemyTeam'] = { k: analysis['enemyTeam'].get(k, 0) + radiantTeam.get(k, 0) for k in set(analysis['enemyTeam']) | set(radiantTeam) }
@@ -242,7 +241,7 @@ def analyzeMatches(playerID, detailedMatches):
                             analysis['allyCarry'] = { k: analysis['allyCarry'].get(k, 0) + direCarry.get(k, 0) for k in set(analysis['allyCarry']) | set(direCarry) }
 
                             if(detailedMatch['result']['radiant_win']):
-                                print('you dire, radiant wins')
+                                nothing = 5
 
                             else:
                                 analysis['general']['wins'].append(detailedMatch['result']['match_id'])
@@ -253,8 +252,6 @@ def analyzeMatches(playerID, detailedMatches):
 
 
 
-
-                                print('you dire, dire wins')
 
 
 
@@ -298,11 +295,9 @@ def addStatsTogether(storage, player, addTogether):
     if(player.get('leaver_status', 0) != 0 and player.get('leaver_status', 0) != 1):
         if(addTogether):
             storage['leaver_status'] = storage.get('leaver_status', 0) +  1
-            print(str(player['leaver_status']) + ' ' + str(player['account_id']) + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
 
         else:
             storage['leaver_status'] = 1
-            print(str(player['leaver_status']) + ' ' + str(player['account_id']) + 'BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB')
 
     elif(not addTogether):
         storage['leaver_status'] = 0

@@ -53,8 +53,6 @@ def analyzeContent(post):
                 if(RepresentsInt(amount)):
                     amountVar = int(amount)
 
-                print(view.lower())
-                print('detailed')
                 if(view.lower() == 'detailed'):
                     viewVar = True
 
@@ -105,9 +103,6 @@ def analyzeContent(post):
             print('reply was not a success, retrying in %s' %(5*i))
             time.sleep(5*i)
 
-
-     #   if message: print('[workeranalyzecontent] dont reply for now')
-     #   if message: print(reply)
 
 
 def RepresentsInt(s):

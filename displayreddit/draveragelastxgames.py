@@ -53,16 +53,9 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     for i in range(0, 24):
         if (len(analysis['general'][gameMode(i)]) != 0):
 
-            print(analysis['general'][gameMode(i)])
-
-
             playedModes[gameMode(i)] = len(analysis['general'][gameMode(i)])
 
     sortedModes = sorted(playedModes.keys(), key=lambda x:playedModes[x], reverse=1)
-
-    print(analysis['general'])
-    print(playedModes)
-    print(sortedModes)
 
     modeString = ''
     for mode in sortedModes:

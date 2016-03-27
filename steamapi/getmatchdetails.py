@@ -1,7 +1,7 @@
 import requests
 from steamapi.steamapikey import SteamAPIKey
 #from reddit.botinfo import message
-message = True
+message = False
 
 def getMatchDetails(q,matchID):
     try:
@@ -18,7 +18,7 @@ def getMatchDetails(q,matchID):
 
 
     except:
-        if message: print('[getmatchdetails] match was skipped! %s' %matchID)
+        print('[getmatchdetails] match was skipped! %s' %matchID)
 
         response = {}
         q.put(response)
