@@ -60,14 +60,14 @@ def findComments(r):
 
 
 
-                if message: print('[workerfindcomments] add comment to replied list')
+                #if message: print('[workerfindcomments] add comment to replied list')
                 cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
                 sql.commit()
 
 
 
 
-                if message: print('[workerfindcomments] preparing reply')
+                #if message: print('[workerfindcomments] preparing reply')
                 pbody = post.body.lower()
                 if any(key.lower() in pbody for key in KEYWORDS):
                     try:
