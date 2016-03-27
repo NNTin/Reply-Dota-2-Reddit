@@ -4,7 +4,7 @@ Reply-Dota-2-Reddit
 A Reddit reply bot. Bot provides useful information provided by the Steam API.
 
 ### Summon the bot
-<player link> [amount:<amount of games>] [view:detailed]
+\<player link\> [amount:\<amount of games\>] [view:detailed]
 
 ### TODOs
 Make filtering by hero, game mode work
