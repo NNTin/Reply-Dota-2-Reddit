@@ -15,4 +15,6 @@ A Reddit reply bot. Bot provides useful information provided by the Steam API.
 * Display Live League games: Displays real time data of an on-going league games. Similar to /u/D2TournamentThreads 
 
 ### Contact me
+[Steam]
+
 [Steam]:http://steamcommunity.com/profiles/76561198036893543
