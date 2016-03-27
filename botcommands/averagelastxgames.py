@@ -201,7 +201,7 @@ def analyzeMatches(playerID, detailedMatches):
 
 
 
-                    if(player['account_id'] == playerID):
+                    if(player.get('account_id', 0) == playerID):
                         analysis['you'] = addStatsTogether(analysis['you'], player, True)
 
 
@@ -295,7 +295,7 @@ def addStatsTogether(storage, player, addTogether):
             #storage[keyValue] = player[keyValue]
             storage[keyValue] = player.get(keyValue, 0)
 
-    if(player['leaver_status'] != 0 and player['leaver_status'] != 1):
+    if(player.get('leaver_status', 0) != 0 and player.get('leaver_status', 0) != 1):
         if(addTogether):
             storage['leaver_status'] = storage.get('leaver_status', 0) +  1
             print(str(player['leaver_status']) + ' ' + str(player['account_id']) + 'AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA')
