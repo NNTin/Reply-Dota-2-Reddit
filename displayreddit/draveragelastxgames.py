@@ -58,11 +58,17 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     sortedModes = sorted(playedModes.keys(), key=lambda x:playedModes[x], reverse=1)
 
     modeString = ''
+    #hover doesn't work for mobile users. Removing for less spam
+    #for mode in sortedModes:
+    #    modeString = modeString + ', [%s %s](/a "' %(playedModes[mode], mode)
+    #    for matchid in analysis['general'][mode]:
+    #            modeString = modeString + '%s ' %matchid
+    #    modeString = modeString + '")'
+
     for mode in sortedModes:
-        modeString = modeString + ', [%s %s](/a "' %(playedModes[mode], mode)
-        for matchid in analysis['general'][mode]:
-                modeString = modeString + '%s ' %matchid
-        modeString = modeString + '")'
+        modeString = modeString + ', %s %s' %(playedModes[mode], mode)
+
+
 
     intro = 'Analyzed a total of %s matches. (%s wins' %(len(detailedMatches), len(analysis['general']['wins']))
     intro = intro + modeString

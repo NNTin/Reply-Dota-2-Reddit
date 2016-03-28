@@ -81,7 +81,7 @@ def analyzeContent(post):
 
     replyIntro = ''
 
-    replyEnd = '\n\n---------------\n\n[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit "Lies. Where\'s the code?") ^^on ^^github, [^^summon](/a "<player link> [amount:<amount of games>] [view:detailed] TODO: provide link to thread") ^^the ^^bot'
+    replyEnd = '\n\n---------------\n\n[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](/a "<player link> [amount:<amount of games>] [view:detailed] TODO: provide link to thread") ^^the ^^bot'
 
 
     reply = replyIntro + partialReply + replyEnd
