@@ -1,0 +1,1 @@
+SteamAPIKey = '<ADD YOUR STEAM API KEY HERE!>'
