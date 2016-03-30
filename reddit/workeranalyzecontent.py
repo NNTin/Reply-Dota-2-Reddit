@@ -60,8 +60,8 @@ def analyzeContent(post):
 
                 #TODO: hero and/or game mode specified...
 
-
-                replyWorthy = True
+                if(len(partialReply) > 20):
+                    replyWorthy = True
             #except:
             #    print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
             #    partialReply += 'Failed to average last X games on player id: %s' %playerID
@@ -90,18 +90,18 @@ def analyzeContent(post):
 
 
 
-    #if(replyWorthy):
-    i = 0
-    while i < 100:
-        i += 1
-        try:
-            post.reply(reply)
-            print('reply success')
+    if(replyWorthy):
+        i = 0
+        while i < 100:
+            i += 1
+            try:
+                post.reply(reply)
+                print('reply success')
 
-            break
-        except:
-            print('reply was not a success, retrying in %s' %(5*i))
-            time.sleep(5*i)
+                break
+            except:
+                print('reply was not a success, retrying in %s' %(5*i))
+                time.sleep(5*i)
 
 
 
