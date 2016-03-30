@@ -1,5 +1,6 @@
 from botcommands import averagelastxgames
 from reddit.botinfo import message
+from steamapi import getheroes
 import time
 #message = True
 
@@ -41,6 +42,30 @@ def analyzeContent(post):
         except:
             view = 'simple'
 
+        playedHeroes = []
+        try:
+            playedHeroesString = pbody.split('playedheroes:')[1]
+            playedHeroesString = playedHeroesString.split(' ')[0]
+            playedHeroesString = playedHeroesString.split('\n')[0]
+
+            playedHeroesString = playedHeroesString.split('+')
+            for hero in playedHeroesString:
+                if hero.lower() in getheroes.heroDictionary.values():
+                    playedHeroes.append(hero.lower())
+
+        except:
+            playedHeroes = []
+
+        playedGameModes = []
+
+        playedRegions = []
+
+        filterWith = {}
+        filterWith['heroes'] = playedHeroes
+        filterWith['game_modes'] = playedGameModes
+        filterWith['regions'] = playedRegions
+
+
         if(RepresentsInt(playerID)):
             #try:
             if True:
@@ -56,7 +81,9 @@ def analyzeContent(post):
                 if(view.lower() == 'detailed'):
                     viewVar = True
 
-                partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar))
+
+
+                partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
 
                 #TODO: hero and/or game mode specified...
 

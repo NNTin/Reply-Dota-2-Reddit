@@ -8,7 +8,7 @@ from steamapi.getheroes import heroDictionary
 #message = True
 
 
-def averageLastXGames(playerID, amount, detailedAnalysis):
+def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
     matches = getmatchhistory.requestGetMatchHistory(playerID, amount)
 
     q = queue.Queue()
