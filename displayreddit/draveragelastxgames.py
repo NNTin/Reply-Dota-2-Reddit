@@ -36,12 +36,14 @@ def printHeroLine(name, playedHeroes):
 
 def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
-    durationM, durationS = divmod((analysis['general']['duration'])/len(detailedMatches), 60)
-    fbM, fbS = divmod((analysis['general']['first_blood_time'])/len(detailedMatches), 60)
+    matchesPlayed = len(detailedMatches) - len(analysis['general']['skipped'])
+
+    durationM, durationS = divmod((analysis['general']['duration'])/matchesPlayed, 60)
+    fbM, fbS = divmod((analysis['general']['first_blood_time'])/matchesPlayed, 60)
     towersDestroyed = (analysis['enemyTeam']['tier1'] + analysis['enemyTeam']['tier2'] + analysis['enemyTeam']['tier3'] + analysis['enemyTeam']['tier4'] \
-                    + analysis['allyTeam']['tier1']  + analysis['allyTeam']['tier2']  + analysis['allyTeam']['tier3']  + analysis['allyTeam']['tier4'])/len(detailedMatches)
+                    + analysis['allyTeam']['tier1']  + analysis['allyTeam']['tier2']  + analysis['allyTeam']['tier3']  + analysis['allyTeam']['tier4'])/matchesPlayed
     barracksDestroyed = (analysis['enemyTeam']['meleeBarracks'] + analysis['enemyTeam']['rangeBarracks'] \
-                         + analysis['allyTeam']['meleeBarracks'] +analysis['allyTeam']['rangeBarracks'])/len(detailedMatches)
+                         + analysis['allyTeam']['meleeBarracks'] +analysis['allyTeam']['rangeBarracks'])/matchesPlayed
 
     numbers = (durationM,durationS,fbM,fbS,round(towersDestroyed,2),round(barracksDestroyed,2))
 
@@ -75,26 +77,27 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     intro = intro + ')  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
 
 
+
     resultTable = 'average | kills | deaths | assists | last hits | denies | gpm | xpm | hero damage | tower damage | hero healing | leaver count (total)\n'
     resultTable = resultTable + '-------|-----|------|-------|---------|------|---|---|-----------|------------|------------|--------------------\n'
     youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
-    resultTable = resultTable + printTableLine(youDescription, analysis['you'], len(detailedMatches))
+    resultTable = resultTable + printTableLine(youDescription, analysis['you'], matchesPlayed)
 
 
     destroyedBuildings = (analysis['enemyTeam']['tier1'], analysis['enemyTeam']['tier2'], analysis['enemyTeam']['tier3'], analysis['enemyTeam']['tier4'], analysis['enemyTeam']['rangeBarracks'], analysis['enemyTeam']['meleeBarracks'])
     allyTeamDescription = '[ally team](/a "Ally team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
 
-    resultTable = resultTable + printTableLine(allyTeamDescription, analysis['allyTeam'], len(detailedMatches)*5)
+    resultTable = resultTable + printTableLine(allyTeamDescription, analysis['allyTeam'], matchesPlayed*5)
 
     destroyedBuildings = (analysis['allyTeam']['tier1'], analysis['allyTeam']['tier2'], analysis['allyTeam']['tier3'], analysis['allyTeam']['tier4'], analysis['allyTeam']['rangeBarracks'], analysis['allyTeam']['meleeBarracks'])
     enemyTeamDescription = '[enemy team](/a "Enemy team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
 
-    resultTable = resultTable + printTableLine(enemyTeamDescription, analysis['enemyTeam'], len(detailedMatches)*5)
+    resultTable = resultTable + printTableLine(enemyTeamDescription, analysis['enemyTeam'], matchesPlayed*5)
     if(detailedAnalysis):
-        resultTable = resultTable + printTableLine('ally support', analysis['allySupport'], len(detailedMatches))
-        resultTable = resultTable + printTableLine('enemy support', analysis['enemySupport'], len(detailedMatches))
-        resultTable = resultTable + printTableLine('ally carry', analysis['allyCarry'], len(detailedMatches))
-        resultTable = resultTable + printTableLine('enemy carry', analysis['enemyCarry'], len(detailedMatches))
+        resultTable = resultTable + printTableLine('ally support', analysis['allySupport'], matchesPlayed)
+        resultTable = resultTable + printTableLine('enemy support', analysis['enemySupport'], matchesPlayed)
+        resultTable = resultTable + printTableLine('ally carry', analysis['allyCarry'], matchesPlayed)
+        resultTable = resultTable + printTableLine('enemy carry', analysis['enemyCarry'], matchesPlayed)
 
     resultHeroes =''
     if(detailedAnalysis):
