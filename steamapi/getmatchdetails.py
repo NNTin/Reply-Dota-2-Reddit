@@ -9,6 +9,7 @@ def getMatchDetails(q,matchID):
 
         URL = "https://api.steampowered.com/IDOTA2Match_570/GetMatchDetails/V001/?key=" + SteamAPIKey + "&match_id=" + str(matchID)
         response = requests.get(URL)
+        response.connection.close()
         response = response.json()
 
         # careful Steam API sometimes returns empty JSONs!

@@ -14,6 +14,7 @@ def requestGetMatchHistory(playerID, amount):
         url = "https://api.steampowered.com/idota2match_570/getmatchhistory/v001/?key=" + SteamAPIKey + "&account_id=" \
               + str(playerID) + "&matches_requested=" + str(amount - len(matches)) + "&start_at_match_id=" + str(start_at_match_id)
         response = requests.get(url)
+        response.connection.close()
         response = response.json()
 
         print(url)

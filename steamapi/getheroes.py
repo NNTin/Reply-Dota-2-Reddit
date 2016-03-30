@@ -10,6 +10,7 @@ def requestGetHeroes():
 
     URL = "https://api.steampowered.com/IEconDOTA2_570/GetHeroes/v0001/?key=" + SteamAPIKey + "&language=en_us"
     response = requests.get(URL)
+    response.connection.close()
     response = response.json()
 
     global heroDictionary
