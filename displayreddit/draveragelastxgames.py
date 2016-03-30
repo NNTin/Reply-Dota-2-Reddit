@@ -116,9 +116,9 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
         resultHeroes = resultHeroes + printHeroLine(supportDescription, analysis['general']['support']['hero_id'])
         resultHeroes = resultHeroes + printHeroLine(carryDescription, analysis['general']['carry']['hero_id'])
 
+    resultEnd = '\n\n---------------\n\n'
 
-
-    return intro + resultTable + resultHeroes
+    return intro + resultTable + resultHeroes + resultEnd
 
 def gameMode(gameModeID):
     return {

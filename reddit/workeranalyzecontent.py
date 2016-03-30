@@ -2,6 +2,7 @@ from botcommands import averagelastxgames
 from reddit.botinfo import message
 from steamapi import getheroes
 import time
+import re
 #message = True
 
 def analyzeContent(post):
@@ -15,84 +16,77 @@ def analyzeContent(post):
 
     #try:
     if True:
-        # need help cleaning this shit up, I'm too dumb for this
-        # add support for analyzing multiple player ids at once!
+        # https://regex101.com/#python
 
-        playerID = pbody.split('/players/')[1]
-        playerID = playerID.split(' ')[0]
-        playerID = playerID.split('/')[0]
-        playerID = playerID.split('\n')[0]
-        playerID = playerID.split('?')[0]
-        playerID = playerID.split('#')[0]
-        playerID = playerID.split(')')[0]
+        pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,8})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
 
-        amount = ''
-        try:
-            amount = pbody.split('amount:')[1]
-            amount = amount.split(' ')[0]
-            amount = amount.split('\n')[0]
-        except:
-            amount = 'amount not found'
+        patternMatches = re.findall(pattern, pbody, re.I)
 
-        view = 'simple'
-        try:
-            view = pbody.split('view:')[1]
-            view = view.split(' ')[0]
-            view = view.split('\n')[0]
-        except:
-            view = 'simple'
+        players = []
 
-        playedHeroes = []
-        try:
-            playedHeroesString = pbody.split('heroes:')[1]
-            playedHeroesString = playedHeroesString.split(' ')[0]
-            playedHeroesString = playedHeroesString.split('\n')[0]
+        alreadyAdded = []
 
-            playedHeroesString = playedHeroesString.split('+')
+        for patternMatch in patternMatches:
+            playedRegions = []
+            playedGameModes = []
+            playedHeroes = []
+            player = {}
+            player['player_id'] = patternMatch[1]
+            player['amount'] = patternMatch[4]
+            player['view'] = patternMatch[7]
+
+
+            playedHeroesString = patternMatch[10].split('+')
             for hero in playedHeroesString:
                 if hero.lower() in getheroes.heroDictionary.values():
                     playedHeroes.append(hero.lower())
 
+            filterWith = {}
+            filterWith['heroes'] = playedHeroes
+            filterWith['game_modes'] = playedGameModes
+            filterWith['regions'] = playedRegions
 
-        except:
-            playedHeroes = []
+            player['filter_with'] = filterWith
 
-        playedGameModes = []
+            if(player['player_id'] not in alreadyAdded):
+                if(len(alreadyAdded) < 1): #anaylze a maxmium of 1 (after hover to view works 3) players in 1 post because of character limit
+                    players.append(player)
+                    alreadyAdded.append(player['player_id'])
 
-        playedRegions = []
-
-        filterWith = {}
-        filterWith['heroes'] = playedHeroes
-        filterWith['game_modes'] = playedGameModes
-        filterWith['regions'] = playedRegions
-
-
-        if(RepresentsInt(playerID)):
-            #try:
-            if True:
-                if message: print('[workeranalyzecontent] found /players/<number> -> averagelastxgames')
-
-                print(playerID)
-                amountVar = 100
-                viewVar = False
-
-                if(RepresentsInt(amount)):
-                    amountVar = int(amount)
-
-                if(view.lower() == 'detailed'):
-                    viewVar = True
+        print(players)
 
 
 
-                partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
+        for player in players:
+            playerID = player['player_id']
+            amount = player['amount']
+            view = player['view']
+            filterWith = player['filter_with']
+            if(RepresentsInt(playerID)):
+                try:
+                    if True:
+                        if message: print('[workeranalyzecontent] found /players/<number> -> averagelastxgames')
 
-                #TODO: hero and/or game mode specified...
+                        print(playerID)
+                        amountVar = 100
+                        viewVar = False
 
-                if(len(partialReply) > 20):
-                    replyWorthy = True
-            #except:
-            #    print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
-            #    partialReply += 'Failed to average last X games on player id: %s' %playerID
+                        if(RepresentsInt(amount)):
+                            amountVar = int(amount)
+
+                        if(view.lower() == 'detailed'):
+                            viewVar = True
+
+
+                        partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
+
+                        #TODO: hero and/or game mode specified...
+
+                        if(len(partialReply) > 20):
+                            replyWorthy = True
+                except:
+                    print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
+                    partialReply += 'Failed to average last X games on player id: %s' %playerID
 
 
     #except:
@@ -109,7 +103,7 @@ def analyzeContent(post):
 
     replyIntro = ''
 
-    replyEnd = '\n\n---------------\n\n[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](/a "<player link> [amount:<amount of games>] [view:detailed] TODO: provide link to thread") ^^the ^^bot'
+    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](/a "<player link> [amount:<amount of games>] [view:detailed] TODO: provide link to thread") ^^the ^^bot'
 
 
     reply = replyIntro + partialReply + replyEnd
