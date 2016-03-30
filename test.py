@@ -1,10 +1,11 @@
 from steamapi import getheroes
+import requests
+from steamapi.steamapikey import SteamAPIKey
 
-if True:
-    getheroes.requestGetHeroes()
+getheroes.requestGetHeroes()
 
-    for hero in getheroes.heroDictionary:
-        print('%s %s' %(hero, getheroes.heroDictionary[hero]))
+for hero in getheroes.heroDictionary:
+    print('%s %s' %(hero, getheroes.heroDictionary[hero]))
 
 
 playedHeroesString = 'oraCLe+techies+notahero+abaDDon+axe'
@@ -17,3 +18,7 @@ for hero in playedHeroesString:
         playedHeroes.append(hero.lower())
 
 print(playedHeroes)
+
+inv_map = {v: k for k, v in getheroes.heroDictionary.items()}
+
+print(inv_map)

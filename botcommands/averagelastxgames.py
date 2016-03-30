@@ -37,7 +37,7 @@ def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
 
 
     for i in range(q.qsize()):
-        if message: print('[averagelastxgames] put everything into an array')
+        #if message: print('[averagelastxgames] put everything into an array')
         detailedMatch = q.get()
         detailedMatches.append(detailedMatch)
         if (int(q.qsize()) == 0):
@@ -48,6 +48,38 @@ def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
         print('[averagelastxgames] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         print('[averagelastxgames] SOMETHING WENT HORRIBLY WRONG')
         print('[averagelastxgames] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+
+    detailedMatchesFiltered = []
+
+    #if (len(filterWith['game_modes']) != 0):
+    #    detailedMatchesFiltered.append()
+
+    print(len(filterWith['heroes']))
+    print(len(filterWith['heroes']))
+    print(len(filterWith['heroes']))
+    print(len(filterWith['heroes']))
+
+    reverseHeroDictionary = {v: k for k, v in heroDictionary.items()}
+
+    if (len(filterWith['heroes']) != 0):
+        detailedMatchesFiltered = []
+        for detailedMatch in detailedMatches:
+            #filtering heroes
+            if 'result' in detailedMatch:
+                for player in detailedMatch['result']['players']:
+                    if(player['account_id'] == playerID):
+                        for hero in filterWith['heroes']:
+                            if(reverseHeroDictionary[hero] == player['hero_id']):
+                                detailedMatchesFiltered.append(detailedMatch)
+                                print('appending')
+                                break
+
+        detailedMatches = detailedMatchesFiltered
+
+
+
+
+
 
     analysis = analyzeMatches(playerID, detailedMatches)
 

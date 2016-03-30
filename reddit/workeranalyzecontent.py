@@ -44,7 +44,7 @@ def analyzeContent(post):
 
         playedHeroes = []
         try:
-            playedHeroesString = pbody.split('playedheroes:')[1]
+            playedHeroesString = pbody.split('heroes:')[1]
             playedHeroesString = playedHeroesString.split(' ')[0]
             playedHeroesString = playedHeroesString.split('\n')[0]
 
@@ -52,6 +52,7 @@ def analyzeContent(post):
             for hero in playedHeroesString:
                 if hero.lower() in getheroes.heroDictionary.values():
                     playedHeroes.append(hero.lower())
+
 
         except:
             playedHeroes = []
