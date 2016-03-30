@@ -1,24 +1,20 @@
-from steamapi import getheroes
-import requests
-from steamapi.steamapikey import SteamAPIKey
+import re
 
-getheroes.requestGetHeroes()
+# pattern matching for this issue: https://github.com/NNTin/Reply-Dota-2-Reddit/issues/2
+# https://docs.python.org/2/library/re.html
 
-for hero in getheroes.heroDictionary:
-    print('%s %s' %(hero, getheroes.heroDictionary[hero]))
+# <player link> [amount:<variable>] [view:<variable>] [heroes:<variable>{+<variable>}]
 
+someText = 'yasp.co/players/40547474' \
+           'yadayadayada' \
+           'dotabuff.com/players/40547474 amount:150 view:detailed heroes:juggernaut' \
+           'yasp.co/players/40547474 heroes:juGGernaut+sveN' \
+           'some wild text' \
+           'dotabuff.com/players/40547474 heroes:dragonknight+clockwerk+faceless void+lifestealer'
 
-playedHeroesString = 'oraCLe+techies+notahero+abaDDon+axe'
-playedHeroesString = playedHeroesString.split('+')
-
-playedHeroes = []
-
-for hero in playedHeroesString:
-    if hero.lower() in getheroes.heroDictionary.values():
-        playedHeroes.append(hero.lower())
-
-print(playedHeroes)
-
-inv_map = {v: k for k, v in getheroes.heroDictionary.items()}
-
-print(inv_map)
+# when doing patternmatching I want to retrieve the following information
+# <player link> [amount:<variable>] [view:<variable>] [heroes:<variable>{+<variable>}]
+playerID = [40547474, 40547474, 40547474, 40547474]
+amount = ['', 150, '', '']
+view = ['', 'detailed', '', '']
+heroes = ['', 'juggernaut', 'juGGernaut+sveN', 'dragonknight+clockwerk+faceless void+lifestealer']

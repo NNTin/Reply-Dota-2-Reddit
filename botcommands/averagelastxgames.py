@@ -67,12 +67,13 @@ def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
             #filtering heroes
             if 'result' in detailedMatch:
                 for player in detailedMatch['result']['players']:
-                    if(player['account_id'] == playerID):
-                        for hero in filterWith['heroes']:
-                            if(reverseHeroDictionary[hero] == player['hero_id']):
-                                detailedMatchesFiltered.append(detailedMatch)
-                                print('appending')
-                                break
+                    if('account_id' in player):
+                        if(player['account_id'] == playerID):
+                            for hero in filterWith['heroes']:
+                                if(reverseHeroDictionary[hero] == player['hero_id']):
+                                    detailedMatchesFiltered.append(detailedMatch)
+                                    print('appending')
+                                    break
 
         detailedMatches = detailedMatchesFiltered
 
