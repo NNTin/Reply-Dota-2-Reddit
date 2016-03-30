@@ -22,6 +22,12 @@ Please note I do this as a hobby and I don't have deep programming skills so thi
 
 [Recognized hero names](http://pastebin.com/gTi3dfuY)
 
+Examples:  
+yasp.co/players/40547474  
+dotabuff.com/players/40547474 amount:150 view:detailed heroes:juggernaut  
+yasp.co/players/40547474 heroes:juGGernaut+sveN  
+dotabuff.com/players/40547474 heroes:dragonknight+clockwerk+juggernaut+lifestealer  
+
 
 ### Contact me
 [Steam], [Reddit]
