@@ -14,18 +14,24 @@ You can also do suggestions. Please create an issue so I can keep track. Current
 Please note I do this as a hobby and I don't have deep programming skills so things will take a while or I won't be able to make it out of my own incompetence. But this is a good learning experience so I think I will eventually get it right. :)
 
 ### Summon the bot
-\<player link\> [amount:\<amount of games\>] [view:detailed]
+\<player link\> [amount:\<amount of games\>] [view:detailed] [heroes:\<hero name\>{+\<hero name\>}]
 
-### TODOs
-* Make filtering by hero, game mode work 
-* Delete comment when bot caller messages bot: Bots provides delete link in post. Bot caller can message bot with pre-filled message and make bot delete post. 
-* Analyze Meta of 1 or more players: Lists average Radiant/Dire stats (whole team, support, carry) as well as hero choices. 
-* Make bot respond to private messages: Allow users to stay anonymous. 
-* Cross subreddit bot summons by adding /u/\<bot name\> 
-* Display Live League games: Displays real time data of an on-going league games. Similar to /u/D2TournamentThreads 
+<>: mandatory
+\[]: optional
+{}: repeat as often as you want
+
+[Recognized hero names](http://pastebin.com/gTi3dfuY)
+
+Examples:  
+yasp.co/players/40547474  
+dotabuff.com/players/40547474 amount:150 view:detailed heroes:juggernaut  
+yasp.co/players/40547474 heroes:juGGernaut+sveN  
+dotabuff.com/players/40547474 heroes:dragonknight+clockwerk+juggernaut+lifestealer  
+
 
 ### Contact me
-[Steam]
+[Steam], [Reddit]
+
 
 [Steam]:http://steamcommunity.com/profiles/76561198036893543
 [Reddit]:https://www.reddit.com/message/compose/?to=lumbdi
