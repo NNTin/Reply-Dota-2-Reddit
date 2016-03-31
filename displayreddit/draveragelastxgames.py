@@ -52,7 +52,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
 
     playedModes = {}
-    for i in range(0, 24):
+    for i in range(-1, 23):
         if (len(analysis['general'][gameMode(i)]) != 0):
 
             playedModes[gameMode(i)] = len(analysis['general'][gameMode(i)])
@@ -122,6 +122,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
 def gameMode(gameModeID):
     return {
+        -1: 'skipped',
         0 : 'Unknown',
         1 : 'All Pick',
         2 : 'Captains Mode',
@@ -145,6 +146,5 @@ def gameMode(gameModeID):
         20 : 'All Random Death Match',
         21 : '1vs1 Solo Mid',
         22 : 'Ranked All Pick',
-        23 : 'skipped',
     }.get(gameModeID, 'Unkown')
 

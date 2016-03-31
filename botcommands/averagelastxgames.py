@@ -344,6 +344,7 @@ def addStatsTogether(storage, player, addTogether):
 
 def gameMode(gameModeID):
     return {
+        -1: 'skipped',
         0 : 'Unknown',
         1 : 'All Pick',
         2 : 'Captains Mode',
@@ -367,7 +368,6 @@ def gameMode(gameModeID):
         20 : 'All Random Death Match',
         21 : '1vs1 Solo Mid',
         22 : 'Ranked All Pick',
-
     }.get(gameModeID, 'Unkown')
 
 def testBit(int_type, offset):
