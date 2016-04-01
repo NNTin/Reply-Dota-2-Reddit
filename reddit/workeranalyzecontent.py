@@ -103,7 +103,7 @@ def analyzeContent(post):
 
     replyIntro = ''
 
-    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](/https://www.reddit.com/r/DotA2/comments/4cl7cl/uanalyzelast100games_now_supports_filtering_by/ "<player link> [amount:<amount of games>] [view:detailed] [heroes:<hero name>{+<hero name>}]") ^^the ^^bot'
+    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](https://www.reddit.com/r/DotA2/comments/4cl7cl/uanalyzelast100games_now_supports_filtering_by/ "<player link> [amount:<amount of games>] [view:detailed] [heroes:<hero name>{+<hero name>}]") ^^the ^^bot'
 
 
     reply = replyIntro + partialReply + replyEnd
