@@ -57,6 +57,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
             playedModes[gameMode(i)] = len(analysis['general'][gameMode(i)])
 
+
     sortedModes = sorted(playedModes.keys(), key=lambda x:playedModes[x], reverse=1)
 
     modeString = ''
