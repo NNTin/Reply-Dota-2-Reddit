@@ -1,4 +1,5 @@
 from steamapi.getheroes import heroDictionary
+from steamapi.getproplayerlist import proPlayerDictionary
 
 #from steamapi.getheroes import heroDictionary, requestGetHeroes
 
@@ -106,7 +107,23 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     else:
         resultHeroes = '\n\n'
 
-    youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+    youDescription = ''
+    if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
+        if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
+            youDescription += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
+        youDescription += '[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+        if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
+            youDescription += 'name: %s' %(proPlayerDictionary[playerID]['name'])
+        if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
+            youDescription += ' team name: %s' %(proPlayerDictionary[playerID]['team_name'])
+        if(proPlayerDictionary[playerID].get('is_locked', 0) != 0 and proPlayerDictionary[playerID].get('is_locked', 0) != ''):
+            youDescription += ' is locked: %s' %(proPlayerDictionary[playerID]['is_locked'])
+        if(proPlayerDictionary[playerID].get('sponsor', 0) != 0 and proPlayerDictionary[playerID].get('sponsor', 0) != ''):
+            youDescription += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
+        youDescription += '")  '
+    else:
+        youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+
     allDescription = '[all](/a "lists all picked heroes")'
     supportDescription = '[support](/a "determined by lowest amount of lasthits")'
     carryDescription = '[carry](/a "determined by highest amount of lasthits")'

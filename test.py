@@ -1,47 +1,23 @@
-import re
+from steamapi.getproplayerlist import requestGetProPlayerList, proPlayerDictionary
 
-# pattern matching for this issue: https://github.com/NNTin/Reply-Dota-2-Reddit/issues/2
-# https://docs.python.org/2/library/re.html
+requestGetProPlayerList()
 
-# <player link> [amount:<variable>] [view:<variable>] [heroes:<variable>{+<variable>}]
-
-someText = 'yasp.co/plaYers/40547474' \
-           'yadayadayada' \
-           'dotabuff.com/players/40547474 amount:150 view:detailed heroes:juGGernaut\n' \
-           'yasp.co/players/40547474 heroes:juGGernaut+sveN' \
-           'some wild text' \
-           'dotabuff.com/players/40547474 heroes:dragonknight+clockwerk+facelessvoid+lifestealer'
-
-#(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,8})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?
-#(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,8})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?
-
-
-
-pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,8})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
-
-patternMatches = re.findall(pattern, someText, re.I)
-
-players = []
-
-for patternMatch in patternMatches:
-    player = {}
-    player['player_id'] = patternMatch[1]
-    player['amount'] = patternMatch[4]
-    player['view'] = patternMatch[7]
-    player['heroes'] = patternMatch[10]
-    print(patternMatch)
-    print(patternMatch[1] + ' amount: ' + patternMatch[4] + ' view: ' +  patternMatch[7] + ' heroes: ' +  patternMatch[10])
-    print('')
-    players.append(player)
-
-print(players)
+for playerID in proPlayerDictionary:
+    youDescription = ''
+    if(proPlayerDictionary[playerID].get('is_pro', False) == True):
+        if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
+            youDescription += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
+        youDescription += '[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+        if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
+            youDescription += 'name: %s' %(proPlayerDictionary[playerID]['name'])
+        if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
+            youDescription += ' team name: %s' %(proPlayerDictionary[playerID]['team_name'])
+        if(proPlayerDictionary[playerID].get('is_locked', 0) != 0 and proPlayerDictionary[playerID].get('is_locked', 0) != ''):
+            youDescription += ' is locked: %s' %(proPlayerDictionary[playerID]['is_locked'])
+        if(proPlayerDictionary[playerID].get('sponsor', 0) != 0 and proPlayerDictionary[playerID].get('sponsor', 0) != ''):
+            youDescription += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
+        youDescription += '")  '
 
 
-
-
-# when doing patternmatching I want to retrieve the following information
-# <player link> [amount:<variable>] [view:<variable>] [heroes:<variable>{+<variable>}]
-playerID = [40547474, 40547474, 40547474, 40547474]
-amount = ['', 150, '', '']
-view = ['', 'detailed', '', '']
-heroes = ['', 'juggernaut', 'juGGernaut+sveN', 'dragonknight+clockwerk+faceless void+lifestealer']
+        print(youDescription)
+        playerString = ''

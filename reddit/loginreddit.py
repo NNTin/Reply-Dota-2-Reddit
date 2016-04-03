@@ -1,6 +1,6 @@
 import praw
 import OAuth2Util
-from steamapi import getheroes
+from steamapi import getheroes, getproplayerlist
 from reddit import botinfo
 from reddit import workerdeletebadcomments, workerfindcomments
 import threading
@@ -22,6 +22,10 @@ class LoginReddit:
         if message: print('[loginreddit] updating heroDictionary')
         getheroes.requestGetHeroes()
         if message: print('[loginreddit] updating heroDictionary success')
+
+        if message: print('[loginreddit] updating proPlayerDictionary')
+        getproplayerlist.requestGetProPlayerList()
+        if message: print('[loginreddit] updating proPlayerDictionary success')
 
         if message: print('[loginreddit] starting threads')
 
