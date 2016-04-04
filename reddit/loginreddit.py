@@ -1,6 +1,6 @@
 import praw
 import OAuth2Util
-from steamapi import getheroes, getproplayerlist
+from steamapi import getheroes, getproplayerlist, getschema, getleaguelisting
 from reddit import botinfo
 from reddit import workerdeletebadcomments, workerfindcomments
 import threading
@@ -26,6 +26,16 @@ class LoginReddit:
         if message: print('[loginreddit] updating proPlayerDictionary')
         getproplayerlist.requestGetProPlayerList()
         if message: print('[loginreddit] updating proPlayerDictionary success')
+
+        if message: print('[loginreddit] updating dota 2 items_game schema')
+        getschema.requestGetSchema()
+        if message: print('[loginreddit] updating dota 2 items_game schema success')
+
+        if message: print('[loginreddit] updating dota 2 league listing')
+        getleaguelisting.requestGetLeagueListing()
+        if message: print('[loginreddit] updating dota 2 league listing success')
+
+
 
         if message: print('[loginreddit] starting threads')
 
