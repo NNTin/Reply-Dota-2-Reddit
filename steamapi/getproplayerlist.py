@@ -20,7 +20,3 @@ def requestGetProPlayerList():
         proPlayerDictionary[player['account_id']] = {}
         for key in keyValues:
             proPlayerDictionary[player['account_id']][key] = player.get(key, 0)
-
-
-
-requestGetProPlayerList()
