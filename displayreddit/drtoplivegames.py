@@ -76,6 +76,7 @@ def displayTopLiveGames(games):
             else:
                 singlePlayerString += '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
 
+            singlePlayerString.replay("|", "")
 
             radiantPlayerString.append(singlePlayerString)
 
@@ -105,6 +106,9 @@ def displayTopLiveGames(games):
 
             else:
                 singlePlayerString += '**[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")**' %(playerID, playerID)
+
+
+            singlePlayerString.replay("|", "")
 
             direPlayerString.append(singlePlayerString)
 
