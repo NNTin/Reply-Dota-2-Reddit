@@ -110,6 +110,7 @@ def displayTopLiveGames(games):
 
             singlePlayerString = singlePlayerString.replace("|", "")
 
+
             direPlayerString.append(singlePlayerString)
 
 
