@@ -1,6 +1,6 @@
 SUBREDDIT = "AnalyzeLast100Games+Dota2+LearnDota2"
 # This is the sub or list of subs to scan for new posts. For a single sub, use "sub1". For multiple subreddits, use "sub1+sub2+sub3+..."
-KEYWORDS = ["dotabuff.com/players/", "yasp.co/players/", "livetopgame"]
+KEYWORDS = ["dotabuff.com/players/", "yasp.co/players/", "livetopgame", "toplivegame"]
 # These are the words you are looking for
 IGNOREAUTHORS = ["dotamatch", "AnalyzeLast100Games", "Lumbditest"]
 # Ignore these authors fdsfjkl

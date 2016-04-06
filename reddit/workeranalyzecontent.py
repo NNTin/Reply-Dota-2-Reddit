@@ -94,7 +94,7 @@ def analyzeContent(post):
         #partialReply += 'Failed to average last X games on player id: %s' %playerID
 
     #if any(key.lower() in pbody for key in KEYWORDS):
-    if 'livetopgame' in pbody.lower():
+    if ('livetopgame' in pbody.lower() or 'toplivegame' in pbody.lower()):
         try:
             partialReply += toplivegames.topLiveGames('klfdjsk')
             replyWorthy = True
