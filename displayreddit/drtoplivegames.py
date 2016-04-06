@@ -1,5 +1,4 @@
-from steamapi import getheroes, getproplayerlist, getschema, getleaguelisting, gettoplivegame, getrealtimestats
-from botcommands import toplivegames
+from steamapi import getheroes, getschema, getleaguelisting
 from steamapi.getproplayerlist import proPlayerDictionary
 from misc.idnamedict import gameMode
 
