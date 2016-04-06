@@ -1,8 +1,8 @@
 SUBREDDIT = "AnalyzeLast100Games+Dota2+LearnDota2"
 # This is the sub or list of subs to scan for new posts. For a single sub, use "sub1". For multiple subreddits, use "sub1+sub2+sub3+..."
-KEYWORDS = ["dotabuff.com/players/", "yasp.co/players/"]
+KEYWORDS = ["dotabuff.com/players/", "yasp.co/players/", "livetopgame"]
 # These are the words you are looking for
-IGNOREAUTHORS = ["dotamatch", "someRandomDude", "AnalyzeLast100Games", "Lumbditest"]
+IGNOREAUTHORS = ["dotamatch", "AnalyzeLast100Games", "Lumbditest"]
 # Ignore these authors fdsfjkl
 MAXPOSTS = 100
 # This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.

@@ -1,4 +1,4 @@
-from botcommands import averagelastxgames
+from botcommands import averagelastxgames, toplivegames
 from reddit.botinfo import message
 from steamapi import getheroes
 import time
@@ -14,8 +14,7 @@ def analyzeContent(post):
 
     partialReply = ''
 
-    #try:
-    if True:
+    try:
         # https://regex101.com/#python
 
         pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
@@ -89,10 +88,18 @@ def analyzeContent(post):
                     partialReply += 'Failed to average last X games on player id: %s' %playerID
 
 
-    #except:
-        #print('[workeranalyzecontent] failed to average last x games on')
+    except:
+        print('[workeranalyzecontent] failed to average last x games on')
 
         #partialReply += 'Failed to average last X games on player id: %s' %playerID
+
+    #if any(key.lower() in pbody for key in KEYWORDS):
+    if 'livetopgame' in pbody.lower():
+        try:
+            partialReply += toplivegames.topLiveGames('klfdjsk')
+            replyWorthy = True
+        except:
+            print('')
 
     #try:
     #    print('add another partial reply')
