@@ -20,6 +20,8 @@ def requestGetHeroes():
         heroID['localized_name'] = heroID['localized_name'].lower().replace(" ", "").replace("-", "").replace("_", "").replace("'", "")
         heroDictionary[heroID['id']] = heroID['localized_name']
 
+    heroDictionary[0] = 'not picked'
+
     if message: print('[getheroes] request set heroes success')
 
     return heroDictionary

@@ -3,6 +3,7 @@ from steamapi.steamapikey import SteamAPIKey
 #message = True
 
 proPlayerDictionary = {}
+playerOnLeaderboard = {}
 
 def requestGetProPlayerList():
 
@@ -20,3 +21,8 @@ def requestGetProPlayerList():
         proPlayerDictionary[player['account_id']] = {}
         for key in keyValues:
             proPlayerDictionary[player['account_id']][key] = player.get(key, 0)
+
+    global playerOnLeaderboard
+    for divison in response['leaderboards']:
+        for player in divison['account_ids']:
+            playerOnLeaderboard[player] = True

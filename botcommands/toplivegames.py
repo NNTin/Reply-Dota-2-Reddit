@@ -49,7 +49,7 @@ def topLiveGames(filterBy):
         #print('Sorted: %s %s' %(topLiveGamesDict[index]['league_id'], topLiveGamesDict[index]['spectators']))
 
         #this provides more information such as KDA, LH/D, levels, gold but I can't put it in 1 post
-        #topLiveGamesDict[index]['realtime'] = getrealtimestats.getRealtimeStats(topLiveGamesDict[index]['server_steam_id'])
+        topLiveGamesDict[index]['realtime'] = getrealtimestats.getRealtimeStats(topLiveGamesDict[index]['server_steam_id'])
 
         topLiveGamesList.append(topLiveGamesDict[index])
 

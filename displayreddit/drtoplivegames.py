@@ -1,10 +1,10 @@
 from steamapi import getheroes, getschema, getleaguelisting
-from steamapi.getproplayerlist import proPlayerDictionary
+from steamapi.getproplayerlist import proPlayerDictionary, playerOnLeaderboard
 from misc.idnamedict import gameMode
 
 def displayTopLiveGames(games):
 
-    partialReply = ''
+    partialReply = 'Displaying top 3 games sorted by spectator count.  \nHover over links including hero icons to display more information.\n\n---------\n\n'
 
     for game in games:
 
@@ -46,24 +46,44 @@ def displayTopLiveGames(games):
         radiantPlayer = []
         direPlayer = []
 
-        count = 0
-        for player in game['players']:
-            if (count < len(game['players']) / 2 ):
-                radiantPlayer.append(player)
-            else:
-                direPlayer.append(player)
-            count += 1
+        #count = 0
+        #for player in game['players']:
+        #    if (count < len(game['players']) / 2 ):
+        #        radiantPlayer.append(player)
+        #    else:
+        #        direPlayer.append(player)
+        #    count += 1
+
+
+
+        for player in game['realtime']['teams'][0]['players']:
+            radiantPlayer.append(player)
+
+        for player in game['realtime']['teams'][1]['players']:
+            direPlayer.append(player)
+
+
+
+
+
+
 
 
         radiantPlayerString = []
         for player in radiantPlayer:
-            playerID = player['account_id']
-            singlePlayerString = '[](/hero-%s) ' %(getheroes.heroDictionary[player['hero_id']])
+            playerID = player['accountid']
+            singlePlayerStats = '"K/D/A: %s/%s/%s, LH/D: %s/%s, Level:%s Gold:%s"' %(player.get('kill_count', 0), player.get('death_count', 0), player.get('assists_count', 0),
+                                                                                     player.get('lh_count', 0), player.get('denies_count', 0), player.get('level', 0),
+                                                                                     player.get('gold', 0))
+
+            singlePlayerString = '[](/hero-%s %s)' %(getheroes.heroDictionary[player['heroid']], singlePlayerStats)
 
             if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
                 if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
                     singlePlayerString += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
-                singlePlayerString += '[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+                #singlePlayerString += '[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+                singlePlayerString += '[%s](http://www.dotabuff.com/esports/players/%s "' %(player.get('name', 'Pro Player!'),playerID)
+
                 if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
                     singlePlayerString += 'name: %s' %(proPlayerDictionary[playerID]['name'])
                 if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
@@ -73,6 +93,8 @@ def displayTopLiveGames(games):
                 if(proPlayerDictionary[playerID].get('sponsor', 0) != 0 and proPlayerDictionary[playerID].get('sponsor', 0) != ''):
                     singlePlayerString += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
                 singlePlayerString += '")  '
+            elif(playerID in playerOnLeaderboard.keys()):
+                singlePlayerString += 'On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
             else:
                 singlePlayerString += '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
 
@@ -83,8 +105,15 @@ def displayTopLiveGames(games):
 
         direPlayerString = []
         for player in direPlayer:
-            playerID = player['account_id']
-            singlePlayerString = '[](/hero-%s)' %(getheroes.heroDictionary[player['hero_id']])
+            playerID = player['accountid']
+
+            #KDA, LH/D, Lvl, Gold
+
+            singlePlayerStats = '"K/D/A: %s/%s/%s, LH/D: %s/%s, Level:%s Gold:%s"' %(player.get('kill_count', 0), player.get('death_count', 0), player.get('assists_count', 0),
+                                                                                     player.get('lh_count', 0), player.get('denies_count', 0), player.get('level', 0),
+                                                                                     player.get('gold', 0))
+
+            singlePlayerString = '[](/hero-%s %s)' %(getheroes.heroDictionary[player['heroid']], singlePlayerStats)
 
             if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
 
@@ -93,7 +122,8 @@ def displayTopLiveGames(games):
                 if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
                     singlePlayerString += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
 
-                singlePlayerString += '**[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+                #singlePlayerString += '**[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+                singlePlayerString += '**[%s](http://www.dotabuff.com/esports/players/%s "' %(player.get('name', 'Pro Player!'),playerID)
                 if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
                     singlePlayerString += 'name: %s' %(proPlayerDictionary[playerID]['name'])
                 if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
@@ -104,6 +134,9 @@ def displayTopLiveGames(games):
                     singlePlayerString += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
                 singlePlayerString += '")**  '
 
+
+            elif(playerID in playerOnLeaderboard.keys()):
+                singlePlayerString += '**On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")**' %(playerID, playerID)
             else:
                 singlePlayerString += '**[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")**' %(playerID, playerID)
 
