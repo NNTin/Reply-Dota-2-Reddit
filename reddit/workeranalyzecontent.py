@@ -1,5 +1,5 @@
 from botcommands import averagelastxgames, toplivegames
-from reddit.botinfo import message
+from reddit.botinfo import message,botName
 from steamapi import getheroes
 import time
 import re
@@ -124,13 +124,28 @@ def analyzeContent(post):
         while i < 100:
             i += 1
             try:
-                post.reply(reply)
+                my_new_comment = post.reply(reply)
                 print('reply success')
+
+                j = 0
+                while j < 100:
+                    j += 1
+                    try:
+                        message_template = 'https://www.reddit.com/message/compose/?to=' + botName + '&subject=deletion&message={fullname}'
+                        delete_link = message_template.format(fullname=my_new_comment.fullname)
+
+                        footer_template = ', [^^deletion ^^link]({url} "Only works for bot summoner and /r/dota2 mods! Do not change already filled out form!")'
+                        footer = footer_template.format(url=delete_link)
+                        my_new_comment.edit(my_new_comment.body + footer)
+
+                        break
+                    except:
+                        time.sleep(2*j)
 
                 break
             except:
-                print('reply was not a success, retrying in %s' %(5*i))
-                time.sleep(5*i)
+                print('reply was not a success, retrying in %s' %(2*i))
+                time.sleep(2*i)
 
 
 

@@ -2,7 +2,7 @@ import praw
 import OAuth2Util
 from steamapi import getheroes, getproplayerlist, getschema, getleaguelisting
 from reddit import botinfo
-from reddit import workerdeletebadcomments, workerfindcomments
+from reddit import workerdeletebadcomments, workerfindcomments, workerdeleterequestedcomments
 import threading
 from reddit.botinfo import message
 #message = True
@@ -39,12 +39,16 @@ class LoginReddit:
 
         if message: print('[loginreddit] starting threads')
 
-        print('[loginreddit] starting deleteBadComments thread')
+        if message: print('[loginreddit] starting deleteBadComments thread')
         t = threading.Thread(target=workerdeletebadcomments.deleteBadComments , args = (r,))
         t.start()
 
         if message: print('[loginreddit] starting findComments thread')
         t = threading.Thread(target=workerfindcomments.findComments, args = (r,))
+        t.start()
+
+        if message: print('[loginreddit] starting deleteRequestedComments thread')
+        t = threading.Thread(target=workerdeleterequestedcomments.deleteRequestedComments, args = (r,))
         t.start()
 
         if message: print('[loginreddit] starting threads success')

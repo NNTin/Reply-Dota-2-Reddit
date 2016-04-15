@@ -32,9 +32,6 @@ def displayTopLiveGames(games):
         intro = 'Server steam id: [%s](/a "needed for upcoming bot command (display real time stats)"), stream delay: %s, spectators: %s, %s, game mode: %s' %(serverSteamID, delay, spectators, averageMMROrLeague,gameModeDisplay)
         intro += '  \n[Score: %s:%s @ %02d:%02d game time](/spoiler)' %(radiantScore, direScore, durationM, durationS)
 
-        if(int(len(game['players'])) != 10):
-            intro += '  \n**Radiant/Dire placement may be inaccurate! Known issue.**'
-
         intro += '\n\n'
 
         radiantName = 'Radiant'

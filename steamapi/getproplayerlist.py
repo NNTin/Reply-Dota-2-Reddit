@@ -23,6 +23,6 @@ def requestGetProPlayerList():
             proPlayerDictionary[player['account_id']][key] = player.get(key, 0)
 
     global playerOnLeaderboard
-    for divison in response['leaderboards']:
+    for divison in response.get('leaderboards', []):
         for player in divison['account_ids']:
             playerOnLeaderboard[player] = True

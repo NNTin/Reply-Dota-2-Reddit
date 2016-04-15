@@ -4,7 +4,6 @@ from reddit.redditconstants import MAXPOSTS, WAIT
 from reddit.botinfo import message
 #message = True
 
-#TODO make bot delete comment by OP pming him
 
 def deleteBadComments(r):
 
@@ -20,10 +19,10 @@ def deleteBadComments(r):
                     if message: print(comment)
                     comment.delete()
                     if message: print('[workerdeletebadcomments] bad comment deleted')
-            time.sleep(WAIT)
+            time.sleep(6*WAIT)
         except:
             if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
             if message: print('[workerdeletebadcomments] There was a fatal error')
             if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            time.sleep(WAIT)
+            time.sleep(6*WAIT)
 
