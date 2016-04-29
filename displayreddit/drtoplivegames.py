@@ -40,6 +40,9 @@ def displayTopLiveGames(games):
         if (game['team_name_radiant'] != ''): radiantName = game['team_name_radiant']
         if (game['team_name_dire'] != ''): direName = game['team_name_dire']
 
+        radiantName = radiantName.replace("|", "")
+        direName = direName.replace("|", "")
+
         radiantPlayer = []
         direPlayer = []
 

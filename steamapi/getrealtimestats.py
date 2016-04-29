@@ -8,6 +8,7 @@ def getRealtimeStats(serverSteamID):
         if message: print('[getmatchdetails] get match details')
 
         URL = 'https://api.steampowered.com/IDOTA2MatchStats_570/GetRealtimeStats/v1?key=' + SteamAPIKey + '&server_steam_id=' + str(serverSteamID)
+        print(URL)
         response = requests.get(URL)
         response.connection.close()
         response = response.json()

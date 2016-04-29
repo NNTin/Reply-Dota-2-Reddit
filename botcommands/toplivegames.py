@@ -1,17 +1,10 @@
 from steamapi import gettoplivegame, getrealtimestats
 from displayreddit import drtoplivegames
 
-def topLiveGames(filterBy):
-    defaultFilter = 'spectators'
+topLiveGamesDict = {}
 
-    if (filterBy.lower().__contains__('mmr')): filterBy ='average_mmr'
-    elif (filterBy != 'average_mmr'):
-        filterBy = defaultFilter
-    #TODO: add option to display league only games
-    #TODO: but filter with what criteria when there are too many league games?!
-
-
-    topLiveGamesDict = {}
+def updateTopLiveGamesDict():
+    global topLiveGamesDict
     for i in range (0, 4):
         tmpTopLiveGamesVar = gettoplivegame.requestGetTopLiveGame(i)
 
@@ -25,6 +18,20 @@ def topLiveGames(filterBy):
                     topLiveGamesDict[game['server_steam_id']] = game
                 #else:
                 #    print('spectators count is lower (Volvo fix this please)')
+
+
+def topLiveGames(filterBy):
+    defaultFilter = 'spectators'
+
+    if (filterBy.lower().__contains__('mmr')): filterBy ='average_mmr'
+    elif (filterBy != 'average_mmr'):
+        filterBy = defaultFilter
+    #TODO: add option to display or MMR league only games
+
+
+    global topLiveGamesDict
+    topLiveGamesDict = {}
+    updateTopLiveGamesDict()
 
 
     #for game in topLiveGamesDict:
