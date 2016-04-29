@@ -4,7 +4,7 @@ from misc.idnamedict import gameMode
 
 def displayTopLiveGames(games):
 
-    partialReply = 'Displaying top 3 games sorted by spectator count.  \nHover over links including hero icons to display more information.\n\n---------\n\n'
+    partialReply = 'Displaying top 3 games sorted by spectator count.  \nHover over links including hero icons to display more information (KDA, LH/D).\n\n---------\n\n'
 
     for game in games:
 

@@ -54,7 +54,8 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
 
     playedModes = {}
-    for i in range(-1, 23):
+    for i in range(0, 23):
+    #for i in range(-1, 23):
         if (len(analysis['general'][gameMode(i)]) != 0):
 
             playedModes[gameMode(i)] = len(analysis['general'][gameMode(i)])
@@ -73,9 +74,11 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     for mode in sortedModes:
         modeString = modeString + ', %s %s' %(playedModes[mode], mode)
 
+    skippedMessage = ''
+    if(len(analysis['general']['skipped']) != 0):
+        skippedMessage = ' (%s skipped)' %len(analysis['general']['skipped'])
 
-
-    intro = 'Analyzed a total of %s matches. (%s wins' %(len(detailedMatches), len(analysis['general']['wins']))
+    intro = 'Analyzed a total of %s matches%s. (%s wins' %(len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
     intro = intro + modeString
     intro = intro + ')  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
 
