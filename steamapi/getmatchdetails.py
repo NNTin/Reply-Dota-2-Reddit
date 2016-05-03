@@ -26,6 +26,7 @@ def getMatchDetails(q,matchID):
                 attempt += 1
                 if (attempt == 3):
                     print('Tried %s times, cancelling API request. (Skipped counter increases)')
+                    q.put(response)
                     break
                 print('Failed API request, retrying in %s seconds' %(attempt * 2))
                 time.sleep(attempt * 2)
