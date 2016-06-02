@@ -121,14 +121,14 @@ def analyzeContent(post):
 
     if(replyWorthy):
         i = 0
-        while i < 100:
+        while i < 20:
             i += 1
             try:
                 my_new_comment = post.reply(reply)
                 print('reply success')
 
                 j = 0
-                while j < 100:
+                while j < 20:
                     j += 1
                     try:
                         message_template = 'https://www.reddit.com/message/compose/?to=' + botName + '&subject=deletion&message={fullname}'

@@ -28,10 +28,10 @@ def requestGetMatchHistory(playerID, amount):
 
             if response == {}:
                 attempt += 1
-                if (attempt == 240):
+                if (attempt == 30):
                     print('Tried %s times, cancelling API request. (Skipped counter increases)')
                     break
-                print('Failed API request, retrying in %s seconds; attempt #%s' %(1, attempt))
+                print('Failed API request (empty json), retrying in %s seconds; attempt #%s' %(2, attempt))
                 time.sleep(1)
                 continue
             else:
