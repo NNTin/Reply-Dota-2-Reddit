@@ -11,7 +11,8 @@ def displayResult (playerID, playedMatchesTogether, general):
     intro_template = 'Looking at the last **{amountOfMatches}** games: {playerName} played with pro players in **{amountTogether}** games:'
     intro_sub_template = ' {playerName} {amount} times,'
 
-    body_template = '\n\nIn the common matches following heroes were played:\n\n'
+    body_template = '\n\nEach player played the following heroes:\n\n'
+
     body_sub_template = ' {playerName} |{hero_template}\n\n'
     hero_template = ' {amount}x[](/hero-{hero})'
 
