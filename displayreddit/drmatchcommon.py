@@ -91,7 +91,7 @@ def displayResult (playerID, playedMatchesTogether, general):
 
 def getPlayerString(playerID):
     player_name_template = '**[DB](http://dotabuff.com/players/{playerID} "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/{playerID} "Yasp: Provides free replay analysis")**'
-    pro_player_name_template = '**[](/{flag})[{name}](/http://www.dotabuff.com/esports/players/{playerID} "team name: {teamName}, sponsor: {sponsor}")**'
+    pro_player_name_template = '**[](/{flag})[{name}](http://www.dotabuff.com/esports/players/{playerID} "team name: {teamName}, sponsor: {sponsor}")**'
 
     if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
         return(pro_player_name_template.format(flag=proPlayerDictionary[playerID].get('country_code', 0), name=proPlayerDictionary[playerID].get('name', 'Pro Player!'), playerID=playerID, teamName=proPlayerDictionary[playerID].get('team_name', 'N/A'), sponsor=proPlayerDictionary[playerID].get('sponsor', 'N/A')))
