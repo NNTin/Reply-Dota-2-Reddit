@@ -1,4 +1,4 @@
-from botcommands import averagelastxgames, toplivegames
+from botcommands import averagelastxgames, toplivegames, matchcommon
 from reddit.botinfo import message,botName
 from steamapi import getheroes
 import time
@@ -14,92 +14,105 @@ def analyzeContent(post):
 
     partialReply = ''
 
-    try:
-        # https://regex101.com/#python
-
-        pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
-
-        patternMatches = re.findall(pattern, pbody, re.I)
-
-        players = []
-
-        alreadyAdded = []
-
-        for patternMatch in patternMatches:
-            playedRegions = []
-            playedGameModes = []
-            playedHeroes = []
-            player = {}
-            player['player_id'] = patternMatch[1]
-            player['amount'] = patternMatch[4]
-            player['view'] = patternMatch[7]
-
-
-            playedHeroesString = patternMatch[10].split('+')
-            for hero in playedHeroesString:
-                if hero.lower() in getheroes.heroDictionary.values():
-                    playedHeroes.append(hero.lower())
-
-            filterWith = {}
-            filterWith['heroes'] = playedHeroes
-            filterWith['game_modes'] = playedGameModes
-            filterWith['regions'] = playedRegions
-
-            player['filter_with'] = filterWith
-
-            if(player['player_id'] not in alreadyAdded):
-                if(len(alreadyAdded) < 1): #anaylze a maxmium of 1 (after hover to view works 3) players in 1 post because of character limit
-                    players.append(player)
-                    alreadyAdded.append(player['player_id'])
-
-        print(players)
-
-
-
-        for player in players:
-            playerID = player['player_id']
-            amount = player['amount']
-            view = player['view']
-            filterWith = player['filter_with']
-            if(RepresentsInt(playerID)):
-                try:
-                    if True:
-                        if message: print('[workeranalyzecontent] found /players/<number> -> averagelastxgames')
-
-                        print(playerID)
-                        amountVar = 100
-                        viewVar = False
-
-                        if(RepresentsInt(amount)):
-                            amountVar = int(amount)
-
-                        if(view.lower() == 'detailed'):
-                            viewVar = True
-
-
-                        partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
-
-                        #TODO: hero and/or game mode specified...
-
-                        if(len(partialReply) > 20):
-                            replyWorthy = True
-                except:
-                    print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
-                    partialReply += 'Failed to average last X games on player id: %s' %playerID
-
-
-    except:
-        print('[workeranalyzecontent] failed to average last x games on')
-
-        #partialReply += 'Failed to average last X games on player id: %s' %playerID
-
-    #if any(key.lower() in pbody for key in KEYWORDS):
     if ('livetopgame' in pbody.lower() or 'toplivegame' in pbody.lower()):
         try:
             partialReply += toplivegames.topLiveGames('klfdjsk')
             replyWorthy = True
         except:
             print('')
+
+
+
+    else:
+        try:
+            # https://regex101.com/#python
+
+            pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
+
+            patternMatches = re.findall(pattern, pbody, re.I)
+
+            players = []
+
+            alreadyAdded = []
+
+            for patternMatch in patternMatches:
+                playedRegions = []
+                playedGameModes = []
+                playedHeroes = []
+                player = {}
+                player['player_id'] = patternMatch[1]
+                player['amount'] = patternMatch[4]
+                player['view'] = patternMatch[7]
+
+
+                playedHeroesString = patternMatch[10].split('+')
+                for hero in playedHeroesString:
+                    if hero.lower() in getheroes.heroDictionary.values():
+                        playedHeroes.append(hero.lower())
+
+                filterWith = {}
+                filterWith['heroes'] = playedHeroes
+                filterWith['game_modes'] = playedGameModes
+                filterWith['regions'] = playedRegions
+
+                player['filter_with'] = filterWith
+
+                if(player['player_id'] not in alreadyAdded):
+                    if(len(alreadyAdded) < 1): #anaylze a maxmium of 1 (after hover to view works 3) players in 1 post because of character limit
+                        players.append(player)
+                        alreadyAdded.append(player['player_id'])
+
+            print(players)
+
+
+
+            for player in players:
+                playerID = player['player_id']
+
+                if ('matchcommon' in pbody.lower() or 'toplivegame' in pbody.lower()):
+                    try:
+                        partialReply += matchcommon.matchCommon(playerID)
+                        replyWorthy = True
+                    except:
+                        print('')
+                else:
+                    amount = player['amount']
+                    view = player['view']
+                    filterWith = player['filter_with']
+                    if(RepresentsInt(playerID)):
+                        try:
+                            if True:
+                                if message: print('[workeranalyzecontent] found /players/<number> -> averagelastxgames')
+
+                                print(playerID)
+                                amountVar = 100
+                                viewVar = False
+
+                                if(RepresentsInt(amount)):
+                                    amountVar = int(amount)
+
+                                if(view.lower() == 'detailed'):
+                                    viewVar = True
+
+
+                                partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
+
+                                #TODO: hero and/or game mode specified...
+
+                                if(len(partialReply) > 20):
+                                    replyWorthy = True
+                        except:
+                            print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
+                            partialReply += 'Failed to average last X games on player id: %s' %playerID
+
+
+        except:
+            print('[workeranalyzecontent] failed to average last x games on')
+
+            #partialReply += 'Failed to average last X games on player id: %s' %playerID
+
+
+
 
     #try:
     #    print('add another partial reply')

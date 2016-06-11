@@ -2,6 +2,8 @@ from steamapi import getrealtimestats
 from steamapi import getschema, getleaguelisting
 from botcommands.toplivegames import topLiveGamesDict, updateTopLiveGamesDict
 from misc.idnamedict import gameMode
+
+
 import time
 
 serverSteamIDVar = 90101063958206464
@@ -66,3 +68,4 @@ while True:
     #TODO: implement break condition via GetMatchDetails and timestamp (not game_time!)
 
     time.sleep(5)
+

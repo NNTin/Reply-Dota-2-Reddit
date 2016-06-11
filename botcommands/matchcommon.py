@@ -3,7 +3,7 @@ from steamapi.getmatchhistory import requestGetMatchHistory
 from displayreddit.drmatchcommon import displayResult
 
 
-getproplayerlist.requestGetProPlayerList()
+#getproplayerlist.requestGetProPlayerList()
 
 proPlayerDictionary = getproplayerlist.proPlayerDictionary
 
@@ -32,6 +32,10 @@ def matchCommon(comparePlayerID, withPlayerIDs=None, amount=100):
     matches = requestGetMatchHistory(comparePlayerID, amount)
 
     playedMatchesTogether = {}
+    general = {}
+    general['totalGames'] = amount
+    general['amountTogether'] = 0
+
 
     for match in matches:
         for player in match['players']:
@@ -47,9 +51,12 @@ def matchCommon(comparePlayerID, withPlayerIDs=None, amount=100):
                     playedMatchesTogether[player['account_id']]['hero_picks'] = {}
                     playedMatchesTogether[player['account_id']]['hero_picks'][player['hero_id']] = 1
 
+                    general['amountTogether'] = general['amountTogether'] + 1
 
 
-    displayResult(comparePlayerID, playedMatchesTogether)
+
+
+    return (displayResult(comparePlayerID, playedMatchesTogether, general))
 
 
 

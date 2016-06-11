@@ -115,7 +115,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
         if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
             youDescription += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
-        youDescription += '[Pro player!](http://www.dotabuff.com/esports/players/%s "' %playerID
+        youDescription += '[%s](http://www.dotabuff.com/esports/players/%s "' %(proPlayerDictionary[playerID].get('name', 'Pro Player!'), playerID)
         if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
             youDescription += 'name: %s' %(proPlayerDictionary[playerID]['name'])
         if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
@@ -138,7 +138,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
         resultHeroes = resultHeroes + printHeroLine(supportDescription, analysis['general']['support']['hero_id'])
         resultHeroes = resultHeroes + printHeroLine(carryDescription, analysis['general']['carry']['hero_id'])
 
-    resultEnd = '\n\n---------------\n\n'
+    resultEnd = '\n\n---\n\n'
 
     return intro + resultTable + resultHeroes + resultEnd
 

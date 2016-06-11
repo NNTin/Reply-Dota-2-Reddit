@@ -24,7 +24,7 @@ def getMatchDetails(q,matchID):
 
             if response == {}:
                 attempt += 1
-                if (attempt == 3):
+                if (attempt == 10):
                     print('Tried %s times, cancelling API request. (Skipped counter increases)')
                     q.put(response)
                     break
