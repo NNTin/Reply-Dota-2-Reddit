@@ -69,9 +69,10 @@ def analyzeContent(post):
             for player in players:
                 playerID = player['player_id']
 
+
                 if ('matchcommon' in pbody.lower() or 'toplivegame' in pbody.lower()):
                     try:
-                        partialReply += matchcommon.matchCommon(playerID)
+                        partialReply += matchcommon.matchCommon(int(playerID))
                         replyWorthy = True
                     except:
                         print('')
