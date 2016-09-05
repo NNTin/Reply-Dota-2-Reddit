@@ -27,7 +27,7 @@ def analyzeContent(post):
         try:
             # https://regex101.com/#python
 
-            pattern = '(yasp\.co|dotabuff\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
+            pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
 
             patternMatches = re.findall(pattern, pbody, re.I)
 
