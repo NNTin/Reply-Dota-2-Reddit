@@ -86,7 +86,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
 
     resultTable = 'average | kills | deaths | assists | last hits | denies | gpm | xpm | hero damage | tower damage | hero healing | leaver count (total)\n'
     resultTable = resultTable + '-------|-----|------|-------|---------|------|---|---|-----------|------------|------------|--------------------\n'
-    youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+    youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
     resultTable = resultTable + printTableLine(youDescription, analysis['you'], matchesPlayed)
 
 
@@ -126,7 +126,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
             youDescription += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
         youDescription += '")  '
     else:
-        youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+        youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
 
     allDescription = '[all](/a "lists all picked heroes")'
     supportDescription = '[support](/a "determined by lowest amount of lasthits")'

@@ -94,9 +94,9 @@ def displayTopLiveGames(games):
                     singlePlayerString += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
                 singlePlayerString += '")  '
             elif(playerID in playerOnLeaderboard.keys()):
-                singlePlayerString += 'On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+                singlePlayerString += 'On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
             else:
-                singlePlayerString += '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")' %(playerID, playerID)
+                singlePlayerString += '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
 
             singlePlayerString = singlePlayerString.replace("|", "")
 
@@ -136,9 +136,9 @@ def displayTopLiveGames(games):
 
 
             elif(playerID in playerOnLeaderboard.keys()):
-                singlePlayerString += '**On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")**' %(playerID, playerID)
+                singlePlayerString += '**On Leaderboard! [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")**' %(playerID, playerID)
             else:
-                singlePlayerString += '**[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[YASP](http://yasp.co/players/%s "Yasp: Provides free replay analysis")**' %(playerID, playerID)
+                singlePlayerString += '**[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")**' %(playerID, playerID)
 
 
             singlePlayerString = singlePlayerString.replace("|", "")
