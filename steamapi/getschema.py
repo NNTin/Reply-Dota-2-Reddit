@@ -31,7 +31,7 @@ def requestGetSchema():
 
         response = response.text
 
-        dota2schema = vdf.parse(response)
+        dota2schema = vdf.loads(response)
 
         with open('dota2schema.txt', 'w') as outfile:
             json.dump(dota2schema, outfile)
