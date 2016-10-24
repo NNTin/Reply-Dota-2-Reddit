@@ -4,7 +4,7 @@ from steamapi.steamapikey import SteamAPIKey
 #from reddit.botinfo import message
 message = False
 
-def getMatchDetails(q,matchID):
+def getMatchDetails(matchID, q=None):
 
     try:
         response = {}
@@ -26,19 +26,29 @@ def getMatchDetails(q,matchID):
                 attempt += 1
                 if (attempt == 10):
                     print('Tried %s times, cancelling API request. (Skipped counter increases)')
-                    q.put(response)
+                    if q == None:
+                        return response
+                    else:
+                        q.put(response)
                     break
-                print('Failed API request, retrying in %s seconds' %(attempt * 2))
+                print('Failed API request, retrying in %s seconds' %(2))
+                print(URL)
                 time.sleep(attempt * 2)
                 continue
             else:
-                q.put(response)
+                if q == None:
+                    return response
+                else:
+                    q.put(response)
 
 
     except:
         print('[getmatchdetails] there was an error, match is skipped! %s' %matchID)
 
         response = {}
-        q.put(response)
+        if q == None:
+            return response
+        else:
+            q.put(response)
 
         # future, retry until it works!

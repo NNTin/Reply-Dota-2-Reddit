@@ -1,6 +1,7 @@
 from steamapi.getheroes import heroDictionary
 from steamapi.getproplayerlist import proPlayerDictionary
 from misc.idnamedict import gameMode
+from converter import playerconverter
 
 #from steamapi.getheroes import heroDictionary, requestGetHeroes
 
@@ -20,7 +21,7 @@ def printHeroLine(name, playedHeroes):
     sortedPlayedHeroes = sorted(playedHeroes.keys(), key=lambda x:playedHeroes[x].get('count', 0), reverse=1)
     i = 0
 
-    resultHeroes = name + ' | '
+    resultHeroes = str(name) + ' | '
 
     for heroID in sortedPlayedHeroes:
         if (playedHeroes[heroID]['count'] == 0):
@@ -64,12 +65,6 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     sortedModes = sorted(playedModes.keys(), key=lambda x:playedModes[x], reverse=1)
 
     modeString = ''
-    #hover doesn't work for mobile users. Removing for less spam
-    #for mode in sortedModes:
-    #    modeString = modeString + ', [%s %s](/a "' %(playedModes[mode], mode)
-    #    for matchid in analysis['general'][mode]:
-    #            modeString = modeString + '%s ' %matchid
-    #    modeString = modeString + '")'
 
     for mode in sortedModes:
         modeString = modeString + ', %s %s' %(playedModes[mode], mode)
@@ -78,7 +73,9 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     if(len(analysis['general']['skipped']) != 0):
         skippedMessage = ' (%s skipped)' %len(analysis['general']['skipped'])
 
-    intro = 'Analyzed a total of %s matches%s. (%s wins' %(len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
+    intro = '####&#009;\n#####&#009; Hover to view player analysis [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")\n######&#009;\n\n' \
+            '' \
+            'Analyzed a total of %s matches%s. (%s wins' %(playerID, playerID, len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
     intro = intro + modeString
     intro = intro + ')  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
 
@@ -111,22 +108,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     else:
         resultHeroes = '\n\n'
 
-    youDescription = ''
-    if (playerID in proPlayerDictionary and proPlayerDictionary[playerID].get('is_pro', False) == True):
-        if(proPlayerDictionary[playerID].get('country_code', 0) != 0 and proPlayerDictionary[playerID].get('country_code', 0) != ''):
-            youDescription += '[](/%s)' %proPlayerDictionary[playerID]['country_code']
-        youDescription += '[%s](http://www.dotabuff.com/esports/players/%s "' %(proPlayerDictionary[playerID].get('name', 'Pro Player!'), playerID)
-        if(proPlayerDictionary[playerID].get('name', 0) != 0 and proPlayerDictionary[playerID].get('name', 0) != ''):
-            youDescription += 'name: %s' %(proPlayerDictionary[playerID]['name'])
-        if(proPlayerDictionary[playerID].get('team_name', 0) != 0 and proPlayerDictionary[playerID].get('team_name', 0) != ''):
-            youDescription += ' team name: %s' %(proPlayerDictionary[playerID]['team_name'])
-        if(proPlayerDictionary[playerID].get('is_locked', 0) != 0 and proPlayerDictionary[playerID].get('is_locked', 0) != ''):
-            youDescription += ' is locked: %s' %(proPlayerDictionary[playerID]['is_locked'])
-        if(proPlayerDictionary[playerID].get('sponsor', 0) != 0 and proPlayerDictionary[playerID].get('sponsor', 0) != ''):
-            youDescription += ' sponsor: %s' %(proPlayerDictionary[playerID]['sponsor'])
-        youDescription += '")  '
-    else:
-        youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
+    youDescription = playerconverter.playerConverter(playerID)
 
     allDescription = '[all](/a "lists all picked heroes")'
     supportDescription = '[support](/a "determined by lowest amount of lasthits")'

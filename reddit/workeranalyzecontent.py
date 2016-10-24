@@ -1,4 +1,4 @@
-from botcommands import averagelastxgames, toplivegames, matchcommon
+from botcommands import averagelastxgames, match
 from reddit.botinfo import message,botName
 from steamapi import getheroes
 import time
@@ -8,132 +8,57 @@ import re
 def analyzeContent(post):
     if message: print('[workeranalyzecontent')
 
-    replyWorthy = False
-
     pbody = post.body.lower()
-
     partialReply = ''
 
-    if ('livetopgame' in pbody.lower() or 'toplivegame' in pbody.lower()):
-        try:
-            partialReply += toplivegames.topLiveGames('klfdjsk')
-            replyWorthy = True
-        except:
-            print('')
+    analyzedMatches = []
+    analyzedPlayers = []
+    commandCounter = 0
 
 
+    try:
+        pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<playerID>\d{1,9})'
 
-    else:
-        try:
-            # https://regex101.com/#python
+        for m in re.finditer(pattern, pbody, re.I):
+            if commandCounter < 3:                      #Reddit has character limit, only have room for 3 player analysis
+                playerID = m.group('playerID')
+                if playerID not in analyzedPlayers:
+                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), 100, False))
+                    commandCounter += 1
+                    analyzedPlayers.append(playerID)
+            else:
+                break
 
-            pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<player_id>\d{0,9})( amount:( )?(?P<amount>\d+))?( view:( )?(?P<view>\w+))?( heroes:( )?(?P<heroes>[\w+]+))?'
+    except:
+        print('[workeranalyzecontent] failed to average last x games on')
 
-            patternMatches = re.findall(pattern, pbody, re.I)
+    try:
+        pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/matches\/(?P<matchID>\d{1,10})'
 
-            players = []
+        for m in re.finditer(pattern, pbody, re.I):
+            if commandCounter < 3:                      #Reddit has character limit, only have room for 3 match analysis
+                matchID = m.group('matchID')
+                if matchID not in analyzedMatches:
+                    partialReply += str(match.match(matchID))
+                    commandCounter += 1
+                    analyzedMatches.append(matchID)
+            else:
+                break
 
-            alreadyAdded = []
-
-            for patternMatch in patternMatches:
-                playedRegions = []
-                playedGameModes = []
-                playedHeroes = []
-                player = {}
-                player['player_id'] = patternMatch[1]
-                player['amount'] = patternMatch[4]
-                player['view'] = patternMatch[7]
-
-
-                playedHeroesString = patternMatch[10].split('+')
-                for hero in playedHeroesString:
-                    if hero.lower() in getheroes.heroDictionary.values():
-                        playedHeroes.append(hero.lower())
-
-                filterWith = {}
-                filterWith['heroes'] = playedHeroes
-                filterWith['game_modes'] = playedGameModes
-                filterWith['regions'] = playedRegions
-
-                player['filter_with'] = filterWith
-
-                if(player['player_id'] not in alreadyAdded):
-                    if(len(alreadyAdded) < 1): #anaylze a maxmium of 1 (after hover to view works 3) players in 1 post because of character limit
-                        players.append(player)
-                        alreadyAdded.append(player['player_id'])
-
-            print(players)
+    except:
+        print('[workeranalyzecontent] failed to get match')
 
 
-
-            for player in players:
-                playerID = player['player_id']
-
-
-                if ('matchcommon' in pbody.lower() or 'toplivegame' in pbody.lower()):
-                    try:
-                        partialReply += matchcommon.matchCommon(int(playerID))
-                        replyWorthy = True
-                    except:
-                        print('')
-                else:
-                    amount = player['amount']
-                    view = player['view']
-                    filterWith = player['filter_with']
-                    if(RepresentsInt(playerID)):
-                        try:
-                            if True:
-                                if message: print('[workeranalyzecontent] found /players/<number> -> averagelastxgames')
-
-                                print(playerID)
-                                amountVar = 100
-                                viewVar = False
-
-                                if(RepresentsInt(amount)):
-                                    amountVar = int(amount)
-
-                                if(view.lower() == 'detailed'):
-                                    viewVar = True
-
-
-                                partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amountVar, viewVar, filterWith))
-
-                                #TODO: hero and/or game mode specified...
-
-                                if(len(partialReply) > 20):
-                                    replyWorthy = True
-                        except:
-                            print('[workeranalyzecontent] failed to average last x games on %s' %playerID)
-                            partialReply += 'Failed to average last X games on player id: %s' %playerID
-
-
-        except:
-            print('[workeranalyzecontent] failed to average last x games on')
-
-            #partialReply += 'Failed to average last X games on player id: %s' %playerID
-
-
-
-
-    #try:
-    #    print('add another partial reply')
-    #except:
-    #    print('add another partial reply')
-
-    #"<player link> [amount:<amount of games up to 500>] [view:detailed]\n e.g. yasp.co/players/40547474 amount:75 view:detailed"
 
     replyIntro = ''
 
-    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^summon](https://www.reddit.com/r/DotA2/comments/4cl7cl/uanalyzelast100games_now_supports_filtering_by/ "<player link> [amount:<amount of games>] [view:detailed] [heroes:<hero name>{+<hero name>}]") ^^the ^^bot'
+    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^message](https://www.reddit.com/message/compose/?to=lumbdi) ^^the ^^owner'
 
 
     reply = replyIntro + partialReply + replyEnd
 
-    print(reply)
 
-
-
-    if(replyWorthy):
+    if(commandCounter != 0):
         i = 0
         while i < 20:
             i += 1

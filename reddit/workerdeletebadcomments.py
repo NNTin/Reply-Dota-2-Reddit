@@ -8,7 +8,6 @@ from reddit.botinfo import message
 def deleteBadComments(r):
 
     user = r.get_redditor(botName)
-    print(botName)
 
     while True:
         try:
@@ -21,8 +20,5 @@ def deleteBadComments(r):
                     if message: print('[workerdeletebadcomments] bad comment deleted')
             time.sleep(6*WAIT)
         except:
-            if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            if message: print('[workerdeletebadcomments] There was a fatal error')
-            if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
             time.sleep(6*WAIT)
 

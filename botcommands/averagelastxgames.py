@@ -9,7 +9,7 @@ from misc.idnamedict import gameMode
 #message = True
 
 
-def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
+def averageLastXGames(playerID, amount, detailedAnalysis):
     matches = getmatchhistory.requestGetMatchHistory(playerID, amount)
 
     q = queue.Queue()
@@ -20,7 +20,7 @@ def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
     detailedMatches = []
 
     for match in matches:
-        t = threading.Thread(target=getmatchdetails.getMatchDetails, args = (q,match['match_id'],))
+        t = threading.Thread(target=getmatchdetails.getMatchDetails, args = (match['match_id'],q,))
         t.daemon = True
         t.start()
         time.sleep(0.1)
@@ -49,36 +49,6 @@ def averageLastXGames(playerID, amount, detailedAnalysis, filterWith):
         print('[averagelastxgames] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
         print('[averagelastxgames] SOMETHING WENT HORRIBLY WRONG')
         print('[averagelastxgames] @@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-
-    detailedMatchesFiltered = []
-
-    #if (len(filterWith['game_modes']) != 0):
-    #    detailedMatchesFiltered.append()
-
-    print(len(filterWith['heroes']))
-    print(len(filterWith['heroes']))
-    print(len(filterWith['heroes']))
-    print(len(filterWith['heroes']))
-
-    reverseHeroDictionary = {v: k for k, v in heroDictionary.items()}
-
-    if (len(filterWith['heroes']) != 0):
-        detailedMatchesFiltered = []
-        for detailedMatch in detailedMatches:
-            #filtering heroes
-            if 'result' in detailedMatch:
-                for player in detailedMatch['result']['players']:
-                    if('account_id' in player):
-                        if(player['account_id'] == playerID):
-                            for hero in filterWith['heroes']:
-                                if(reverseHeroDictionary[hero] == player['hero_id']):
-                                    detailedMatchesFiltered.append(detailedMatch)
-                                    print('appending')
-                                    break
-
-        detailedMatches = detailedMatchesFiltered
-
-
 
 
 

@@ -1,20 +1,17 @@
 import time
-from reddit.botinfo import botName
 from reddit.redditconstants import MAXPOSTS, WAIT
 from reddit.redditconstants import PRIVILEDGEDAUTHORS
 #message = True
 
 
 def deleteRequestedComments(r):
-    print(botName)
-
     while True:
         try:
             print('[workerdeleterequestedcomments] checking mail with DELETION subject')
             unread = r.get_unread(limit=MAXPOSTS)
             for msg in unread:
+                print('You have Mail!')
                 try:
-                    print('mail found')
                     if (msg.subject == 'deletion'):
                         print('subject deletion')
                         comment = r.get_info(thing_id=msg.body)
@@ -25,12 +22,14 @@ def deleteRequestedComments(r):
                             print('found to be deleted comment')
                             comment.delete()
                             print('deleting comment')
-                        msg.mark_as_read()
+
                         print('mark as read')
                 except:
                     print('Fail?')
+                msg.mark_as_read()
             time.sleep(3*WAIT)
         except:
+            print('[workerdeleterequestedcomments] Crashed')
             time.sleep(3*WAIT)
 
 

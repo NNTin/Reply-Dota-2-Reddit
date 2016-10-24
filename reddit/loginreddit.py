@@ -31,10 +31,6 @@ class LoginReddit:
         getschema.requestGetSchema()
         if message: print('[loginreddit] updating dota 2 items_game schema success')
 
-        if message: print('[loginreddit] updating dota 2 league listing')
-        getleaguelisting.requestGetLeagueListing()
-        if message: print('[loginreddit] updating dota 2 league listing success')
-
 
 
         if message: print('[loginreddit] starting threads')

@@ -84,9 +84,7 @@ def findComments(r):
 
             cycles += 1
         except:
-            if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
-            if message: print('[workerfindcomments] There was a fatal error')
-            if message: print('@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@')
+            if message: print('[workerfindcomments] Could not search for comments')
 
 
         if cycles >= CLEANCYCLES:
