@@ -58,6 +58,6 @@ def playerConverter(playerID, playerSummariesJson=None):
                      '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis") %s' %(playerID, playerID, playerName)
 
             result = result.replace('|','').replace('\\','').replace('*','')
-            return result
+        return result
 
 
