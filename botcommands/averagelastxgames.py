@@ -9,8 +9,9 @@ from misc.idnamedict import gameMode
 #message = True
 
 
-def averageLastXGames(playerID, amount, detailedAnalysis):
-    matches = getmatchhistory.requestGetMatchHistory(playerID, amount)
+def averageLastXGames(playerID, amount=100, detailedAnalysis=False, heroID=None, gameModeID=None, tournamentGamesOnly=False):
+    matches = getmatchhistory.requestGetMatchHistory(playerID=playerID, amount=amount, heroID=heroID, gameModeID=gameModeID, tournamentGamesOnly=tournamentGamesOnly)
+
 
     q = queue.Queue()
     threads = []

@@ -17,18 +17,31 @@ def analyzeContent(post):
 
 
     try:
-        pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<playerID>\d{1,9})'
+        pattern = '(?P<website>yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<playerID>\d{1,9})((\/(?P<tab>\w+))?((?P<queryParameters>\S+))?)?'
+        patternHero = '[?&](hero|hero_id)=(?P<heroID>\w+)'
+        #TODO: check if gameMode filtering is working, as of 2016-11-01 query parameter broken in SteamAPI
+        patternGameMode = '[?&]game_mode=(?P<gameModeID>\w+)'
 
         for m in re.finditer(pattern, pbody, re.I):
             if commandCounter < 3:                      #Reddit has character limit, only have room for 3 player analysis
                 playerID = m.group('playerID')
                 if playerID not in analyzedPlayers:
-                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), 100, False))
+                    queryParameters = m.group('queryParameters')
+                    website = m.group('website')
+                    heroID = None
+                    gameModeID = None
+                    if queryParameters != None and (website == 'opendota.com' or website == 'yasp.co'):
+                        n = re.search(patternHero, queryParameters, re.I)
+                        if n != None:
+                            heroID = n.group('heroID')
+                        n = re.search(patternGameMode, queryParameters, re.I)
+                        if n != None:
+                            gameModeID = n.group('gameModeID')
+                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID))
                     commandCounter += 1
                     analyzedPlayers.append(playerID)
             else:
                 break
-
     except:
         print('[workeranalyzecontent] failed to average last x games on')
 

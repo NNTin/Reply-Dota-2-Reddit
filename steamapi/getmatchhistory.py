@@ -3,7 +3,7 @@ from steamapi.steamapikey import SteamAPIKey
 from reddit.botinfo import message
 #message = True
 
-def requestGetMatchHistory(playerID, amount):
+def requestGetMatchHistory(playerID, amount=100, heroID=None, gameModeID=None, tournamentGamesOnly=False):
     if message: print('[getmatchhistory] Getting matchhistory of player id: %s' %playerID)
 
     start_at_match_id = 0
@@ -19,9 +19,18 @@ def requestGetMatchHistory(playerID, amount):
 
         while response == {}:
 
-
             url = "https://api.steampowered.com/idota2match_570/getmatchhistory/v001/?key=" + SteamAPIKey + "&account_id=" \
                   + str(playerID) + "&matches_requested=" + str(amount - len(matches)) + "&start_at_match_id=" + str(start_at_match_id)
+            if heroID is not None:
+                url += '&hero_id=' + str(heroID)
+            if tournamentGamesOnly:
+                url += '&tournament_games_only=1'
+            if gameModeID is not None:                        #TODO: Game Mode is broken in Steam API! Try this again when it is working.
+                url += '&game_mode=' + str(gameModeID)
+
+
+
+
             response = requests.get(url)
             response.connection.close()
             response = response.json()
@@ -45,7 +54,11 @@ def requestGetMatchHistory(playerID, amount):
         #TODO handle error when response has no result
         matches += response['result']['matches']
 
-        start_at_match_id = matches[len(matches)-1]['match_id'] - 1
+        if len(matches) is not 0:
+            start_at_match_id = matches[len(matches)-1]['match_id'] - 1
+        else:
+            start_at_match_id = 0
+
         if (response['result']['results_remaining'] == 0):
             results_remaining = False
 
