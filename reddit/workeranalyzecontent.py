@@ -1,4 +1,4 @@
-from botcommands import averagelastxgames, match
+from botcommands import averagelastxgames, match, odotachat
 from reddit.botinfo import message,botName
 from steamapi import getheroes
 import time
@@ -46,13 +46,17 @@ def analyzeContent(post):
         print('[workeranalyzecontent] failed to average last x games on')
 
     try:
-        pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/matches\/(?P<matchID>\d{1,10})'
+        pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/matches\/(?P<matchID>\d{1,10})(\/(?P<tab>\w+))?'
 
         for m in re.finditer(pattern, pbody, re.I):
             if commandCounter < 3:                      #Reddit has character limit, only have room for 3 match analysis
                 matchID = m.group('matchID')
+                tab = m.group('tab')
                 if matchID not in analyzedMatches:
-                    partialReply += str(match.match(matchID))
+                    if tab == 'chat':
+                        partialReply += str(odotachat.odotaChat(matchID))
+                    else:
+                        partialReply += str(match.match(matchID))
                     commandCounter += 1
                     analyzedMatches.append(matchID)
             else:

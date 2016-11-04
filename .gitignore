@@ -45,3 +45,7 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+*.pyc
+.idea/.name
+.idea/Reply-Dota-2-Reddit.iml
+*.xml
