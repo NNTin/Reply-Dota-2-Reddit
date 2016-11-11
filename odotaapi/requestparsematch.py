@@ -11,9 +11,8 @@ def requestParseMatch(matchID, holdUntilParsed=False):
         if response['version'] == None:
             #send parse request to odota
             print('[requestparsematch] Match is not parsed on OpenDota, sending parse request')
-            url = 'https://www.opendota.com/api/request_job'
-            data  = {"match_id": (None, str(matchID))}
-            response = requests.post(url, files=data)
+            url = 'https://api.opendota.com/api/request/%s' %matchID
+            response = requests.post(url)
             response.connection.close()
             response = response.json()
             print('[requestparsematch] Parse request sent to ODota, response %s' %response)
@@ -35,7 +34,7 @@ def requestParseMatch(matchID, holdUntilParsed=False):
         print('[requestparsematch] Parse request failed.')
 
 def isParsed(jobId):
-    url = 'https://www.opendota.com/api/request_job?id=%s' %jobId
+    url = 'https://api.opendota.com/api/request/%s' %jobId
     response = requests.get(url)
     response.connection.close()
     response = response.json()
