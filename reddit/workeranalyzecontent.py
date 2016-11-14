@@ -37,7 +37,7 @@ def analyzeContent(post):
                         n = re.search(patternGameMode, queryParameters, re.I)
                         if n != None:
                             gameModeID = n.group('gameModeID')
-                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID))
+                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID, getMMR=True))
                     commandCounter += 1
                     analyzedPlayers.append(playerID)
             else:
