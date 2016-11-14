@@ -37,7 +37,11 @@ def printHeroLine(name, playedHeroes):
 
     return resultHeroes
 
-def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
+def displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=False):
+    youDescription = playerconverter.playerConverter(playerID)
+    MMR = None
+    if getMMR:
+        MMR = playerconverter.getMMR(playerID)
 
     matchesPlayed = len(detailedMatches) - len(analysis['general']['skipped'])
 
@@ -73,17 +77,22 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
     if(len(analysis['general']['skipped']) != 0):
         skippedMessage = ' (%s skipped)' %len(analysis['general']['skipped'])
 
-    intro = '####&#009;\n#####&#009; Hover to view player analysis [DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")\n######&#009;\n\n' \
-            '' \
-            'Analyzed a total of %s matches%s. (%s wins' %(playerID, playerID, len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
+    intro = '####&#009;\n#####&#009; Hover to view player analysis %s\n######&#009;\n\n' %youDescription
+    if MMR != None:
+        MMRText = ''
+        for key in MMR.keys():
+            MMRText = MMRText + '%s MMR **%s**, ' %(key, MMR[key])
+        MMRText = MMRText[:-2]
+        intro = intro + 'Player MMR (powered by OpenDota): %s.   \n' %MMRText
+    intro = intro + 'Analyzed a total of %s matches%s. (%s wins' %(len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
     intro = intro + modeString
-    intro = intro + ')  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
+    intro = intro + ') '
+    intro = intro + '  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
 
 
 
     resultTable = 'average | kills | deaths | assists | last hits | denies | gpm | xpm | hero damage | tower damage | hero healing | leaver count (total)\n'
     resultTable = resultTable + '-------|-----|------|-------|---------|------|---|---|-----------|------------|------------|--------------------\n'
-    youDescription = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
     resultTable = resultTable + printTableLine(youDescription, analysis['you'], matchesPlayed)
 
 
@@ -107,8 +116,6 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches):
         resultHeroes = '\n | played heroes (hover hero icons to display wins and losses)\n---|---\n'
     else:
         resultHeroes = '\n\n'
-
-    youDescription = playerconverter.playerConverter(playerID)
 
     allDescription = '[all](/a "lists all picked heroes")'
     supportDescription = '[support](/a "determined by lowest amount of lasthits")'

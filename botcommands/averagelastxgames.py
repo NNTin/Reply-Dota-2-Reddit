@@ -9,7 +9,7 @@ from misc.idnamedict import gameMode
 #message = True
 
 
-def averageLastXGames(playerID, amount=100, detailedAnalysis=False, heroID=None, gameModeID=None, tournamentGamesOnly=False):
+def averageLastXGames(playerID, amount=100, detailedAnalysis=False, heroID=None, gameModeID=None, tournamentGamesOnly=False, getMMR=False):
     matches = getmatchhistory.requestGetMatchHistory(playerID=playerID, amount=amount, heroID=heroID, gameModeID=gameModeID, tournamentGamesOnly=tournamentGamesOnly)
 
 
@@ -56,7 +56,7 @@ def averageLastXGames(playerID, amount=100, detailedAnalysis=False, heroID=None,
 
     analysis = analyzeMatches(playerID, detailedMatches)
 
-    reply = displayResult(playerID, analysis, detailedAnalysis, detailedMatches)
+    reply = displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=getMMR)
 
     return reply
 

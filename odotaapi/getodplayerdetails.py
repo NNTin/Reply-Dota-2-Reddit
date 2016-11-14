@@ -3,7 +3,7 @@ import time
 #from reddit.botinfo import message
 message = False
 
-def getODMatchDetails(matchID, q=None):
+def getODPlayerDetails(playerID, q=None):
 
     try:
         response = {}
@@ -13,7 +13,7 @@ def getODMatchDetails(matchID, q=None):
 
             if message: print('[getodmatchdetails] get match details on OpenDota')
 
-            URL = 'https://api.opendota.com/api/matches/' + str(matchID)
+            URL = 'https://api.opendota.com/api/players/' + str(playerID)
             response = requests.get(URL)
             response.connection.close()
             response = response.json()
@@ -42,7 +42,7 @@ def getODMatchDetails(matchID, q=None):
 
 
     except:
-        print('[getodmatchdetails] there was an error, match is skipped on OpenDota! %s' %matchID)
+        print('[getodmatchdetails] there was an error, match is skipped on OpenDota! %s' %playerID)
 
         response = {}
         if q == None:

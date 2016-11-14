@@ -1,8 +1,15 @@
 from steamapi import getproplayerlist
+from odotaapi import getodplayerdetails
 
 
 
-def playerConverter(playerID, playerSummariesJson=None):
+def playerConverter(playerID, playerSummariesJson=None, includeMMR=False):
+
+    MMR = None
+    if includeMMR:
+        MMR = getMMR(playerID)
+
+
     proPlayerDictionary = getproplayerlist.proPlayerDictionary
 
     if playerID == 4294967295:
@@ -61,3 +68,21 @@ def playerConverter(playerID, playerSummariesJson=None):
         return result
 
 
+def getMMR(playerID):
+    try:
+        odPlayerJson = getodplayerdetails.getODPlayerDetails(playerID)
+        MMR = {}
+        if odPlayerJson['solo_competitive_rank'] != None:
+            MMR['solo'] = odPlayerJson['solo_competitive_rank']
+        if odPlayerJson['competitive_rank'] != None:
+            MMR['party'] = odPlayerJson['competitive_rank']
+        if odPlayerJson['mmr_estimate']['estimate'] != None:
+            MMR['estimate'] = odPlayerJson['mmr_estimate']['estimate']
+
+        #if MMR dict is empty it returns False
+        if bool(MMR):
+            return MMR
+        else:
+            return None
+    except:
+        return None
