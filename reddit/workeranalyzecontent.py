@@ -1,4 +1,5 @@
 from botcommands import averagelastxgames, match, odotachat
+from steamapi import getheroes
 from reddit.botinfo import message,botName
 from steamapi import getheroes
 import time
@@ -31,12 +32,26 @@ def analyzeContent(post):
                     heroID = None
                     gameModeID = None
                     if queryParameters != None and (website == 'opendota.com' or website == 'yasp.co'):
-                        n = re.search(patternHero, queryParameters, re.I)
-                        if n != None:
-                            heroID = n.group('heroID')
-                        n = re.search(patternGameMode, queryParameters, re.I)
-                        if n != None:
-                            gameModeID = n.group('gameModeID')
+                        try:
+                            n = re.search(patternHero, queryParameters, re.I)
+                            if n != None:
+                                heroID = n.group('heroID')
+                            n = re.search(patternGameMode, queryParameters, re.I)
+                            if n != None:
+                                gameModeID = n.group('gameModeID')
+                        except:
+                            print('[workeranalyzecontent] OpenDota hero filtering crashed, needs investigation')
+                    if queryParameters != None and (website == 'dotabuff.com'):
+                        try:
+                            n = re.search(patternHero, queryParameters, re.I)
+                            if n != None:
+                                heroID = n.group('heroID')
+                                reverseDBHeroDictionary = {v:k for k,v in getheroes.heroDictionaryDotabuff.items()}
+                                heroID = reverseDBHeroDictionary[heroID]
+                        except:
+                            print('[workeranalyzecontent] Dotabuff hero filtering crashed, needs investigation')
+
+
                     partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID, getMMR=True))
                     commandCounter += 1
                     analyzedPlayers.append(playerID)

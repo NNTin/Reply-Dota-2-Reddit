@@ -4,6 +4,7 @@ from reddit.botinfo import message
 #message = True
 
 heroDictionary = {}
+heroDictionaryDotabuff = {}
 
 def requestGetHeroes():
     if message: print('[getheroes] request get heroes...')
@@ -14,11 +15,18 @@ def requestGetHeroes():
     response = response.json()
 
     global heroDictionary
+    global heroDictionaryDotabuff
 
     for heroID in response['result']['heroes']:
         # print str(heroID['id']) + " " + heroID['name']
-        heroID['localized_name'] = heroID['localized_name'].lower().replace(" ", "").replace("-", "").replace("_", "").replace("'", "")
+        heroID['localized_name'] = heroID['localized_name'].lower().replace(" ", "-").replace("'", "").replace("_", "")
+        heroDictionaryDotabuff[heroID['id']] = heroID['localized_name']
+
+        heroID['localized_name'] = heroID['localized_name'].lower().replace("-", "").replace("_", "").replace("'", "")
         heroDictionary[heroID['id']] = heroID['localized_name']
+
+
+
 
     heroDictionary[0] = 'not picked'
 

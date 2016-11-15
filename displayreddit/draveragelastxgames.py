@@ -37,7 +37,7 @@ def printHeroLine(name, playedHeroes):
 
     return resultHeroes
 
-def displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=False):
+def displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=True):
     youDescription = playerconverter.playerConverter(playerID)
     MMR = None
     if getMMR:
