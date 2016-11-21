@@ -39,7 +39,6 @@ def findComments(r):
 
                 if pauthor.lower() == r.user.name.lower():
                     # Don't reply to yourself, robot!
-                    #print('Will not reply to myself.')
                     if message2: print('[workerfindcomments] will not reply to myself')
                     continue
 
@@ -49,32 +48,22 @@ def findComments(r):
                     continue
 
 
-
-                #print(pauthor.lower(), end=" ")
-
-
                 cur.execute('SELECT * FROM oldposts WHERE ID=?', [pid])
                 if cur.fetchone():
                     if message2: print('[workerfindcomments] already replied to comment')
                     continue
 
-
-
-                #if message: print('[workerfindcomments] add comment to replied list')
                 cur.execute('INSERT INTO oldposts VALUES(?)', [pid])
                 sql.commit()
 
 
-
-
-                #if message: print('[workerfindcomments] preparing reply')
                 pbody = post.body.lower()
                 if any(key.lower() in pbody for key in KEYWORDS):
                     try:
                         #post.reply('reply success!')
 
                         if message: print('[@@@][workerfindcomments] starting analyzecontent thread')
-                        t = threading.Thread(target=workeranalyzecontent.analyzeContent, args = (post,))
+                        t = threading.Thread(target=workeranalyzecontent.analyzeContent, args = (post,True,)) #isPost = True
                         t.start()
 
                     except:

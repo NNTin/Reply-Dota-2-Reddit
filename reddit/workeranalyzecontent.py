@@ -6,10 +6,14 @@ import time
 import re
 #message = True
 
-def analyzeContent(post):
+def analyzeContent(post, isPost):
     if message: print('[workeranalyzecontent')
 
-    pbody = post.body.lower()
+    if isPost:
+        text = post.body.lower()
+    else:
+        print('this is a thread')
+
     partialReply = ''
 
     analyzedMatches = []
@@ -19,11 +23,11 @@ def analyzeContent(post):
 
     try:
         pattern = '(?P<website>yasp\.co|dotabuff\.com|opendota\.com)\/players\/(?P<playerID>\d{1,9})((\/(?P<tab>\w+))?((?P<queryParameters>\S+))?)?'
-        patternHero = '[?&](hero|hero_id)=(?P<heroID>\w+)'
+        patternHero = '[?&](hero|hero_id)=(?P<heroID>[\w\-]+)'
         #TODO: check if gameMode filtering is working, as of 2016-11-01 query parameter broken in SteamAPI
         patternGameMode = '[?&]game_mode=(?P<gameModeID>\w+)'
 
-        for m in re.finditer(pattern, pbody, re.I):
+        for m in re.finditer(pattern, text, re.I):
             if commandCounter < 3:                      #Reddit has character limit, only have room for 3 player analysis
                 playerID = m.group('playerID')
                 if playerID not in analyzedPlayers:
@@ -63,7 +67,7 @@ def analyzeContent(post):
     try:
         pattern = '(yasp\.co|dotabuff\.com|opendota\.com)\/matches\/(?P<matchID>\d{1,10})(\/(?P<tab>\w+))?'
 
-        for m in re.finditer(pattern, pbody, re.I):
+        for m in re.finditer(pattern, text, re.I):
             if commandCounter < 3:                      #Reddit has character limit, only have room for 3 match analysis
                 matchID = m.group('matchID')
                 tab = m.group('tab')
@@ -95,25 +99,27 @@ def analyzeContent(post):
         while i < 20:
             i += 1
             try:
-                my_new_comment = post.reply(reply)
-                print('reply success')
+                if isPost:
+                    my_new_comment = post.reply(reply)
+                    print('reply success')
 
-                j = 0
-                while j < 20:
-                    j += 1
-                    try:
-                        message_template = 'https://www.reddit.com/message/compose/?to=' + botName + '&subject=deletion&message={fullname}'
-                        delete_link = message_template.format(fullname=my_new_comment.fullname)
+                    j = 0
+                    while j < 20:
+                        j += 1
+                        try:
+                            message_template = 'https://www.reddit.com/message/compose/?to=' + botName + '&subject=deletion&message={fullname}'
+                            delete_link = message_template.format(fullname=my_new_comment.fullname)
 
-                        footer_template = ', [^^deletion ^^link]({url} "Only works for bot summoner and /r/dota2 mods! Do not change already filled out form!")'
-                        footer = footer_template.format(url=delete_link)
-                        my_new_comment.edit(my_new_comment.body + footer)
+                            footer_template = ', [^^deletion ^^link]({url} "Only works for bot summoner and /r/dota2 mods! Do not change already filled out form!")'
+                            footer = footer_template.format(url=delete_link)
+                            my_new_comment.edit(my_new_comment.body + footer)
 
-                        break
-                    except:
-                        time.sleep(2*j)
-
-                break
+                            break
+                        except:
+                            time.sleep(2*j)
+                    break
+                else:
+                    print('this is a thread')
             except:
                 print('reply was not a success, retrying in %s' %(2*i))
                 time.sleep(2*i)
