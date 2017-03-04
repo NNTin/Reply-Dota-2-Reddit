@@ -54,7 +54,6 @@ class LoginReddit:
 
 
         self.r = r
-        self.o = o
 
 
 

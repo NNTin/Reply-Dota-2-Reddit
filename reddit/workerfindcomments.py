@@ -8,7 +8,8 @@ message2 = False
 
 def findComments(r):
 
-    subreddit = r.get_subreddit(SUBREDDIT)
+    subreddit = r.subreddit(SUBREDDIT)
+
 
     cycles = 0
     if message: print('[workerfindcomments] Opening SQL Database')
@@ -22,9 +23,9 @@ def findComments(r):
         try:
             if message: print('[workerfindcomments] Searching %s' % SUBREDDIT)
 
-            posts = list(subreddit.get_comments(limit=MAXPOSTS))
+            posts = subreddit.stream.comments()
 
-            posts.reverse()
+
             for post in posts:
                 pid = post.id
 
@@ -37,7 +38,7 @@ def findComments(r):
 
 
 
-                if pauthor.lower() == r.user.name.lower():
+                if pauthor.lower() == r.user.me():
                     # Don't reply to yourself, robot!
                     if message2: print('[workerfindcomments] will not reply to myself')
                     continue
