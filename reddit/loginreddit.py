@@ -1,5 +1,5 @@
 import praw
-import OAuth2Util
+import obot
 from steamapi import getheroes, getproplayerlist, getschema, getleaguelisting
 from reddit import botinfo
 from reddit import workerdeletebadcomments, workerfindcomments, workerdeleterequestedcomments
@@ -11,12 +11,14 @@ from reddit.botinfo import message
 class LoginReddit:
 
     def __init__(self):
-        if message: print('[loginreddit] setting user agent')
-        r = praw.Reddit(botinfo.app_ua)
-        if message: print('[loginreddit] login into reddit')
-        o = OAuth2Util.OAuth2Util(r)
-        if message: print('[loginreddit] auto-login enabled')
-        o.refresh(force=True)
+        if message: print('[loginreddit] logging in')
+        r = praw.Reddit(client_id=obot.client_id,
+                        client_secret=obot.client_secret,
+                        user_agent=obot.user_agent,
+                        username=obot.username,
+                        password=obot.password)
+
+
         if message: print('[loginreddit] logging successful')
 
         if message: print('[loginreddit] updating heroDictionary')

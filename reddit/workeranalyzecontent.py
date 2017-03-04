@@ -55,10 +55,12 @@ def analyzeContent(post, isPost):
                         except:
                             print('[workeranalyzecontent] Dotabuff hero filtering crashed, needs investigation')
 
-
-                    partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID, getMMR=True))
-                    commandCounter += 1
-                    analyzedPlayers.append(playerID)
+                    try:
+                        partialReply += str(averagelastxgames.averageLastXGames(int(playerID), amount=100, detailedAnalysis=False, heroID=heroID, gameModeID=gameModeID, getMMR=True))
+                        commandCounter += 1
+                        analyzedPlayers.append(playerID)
+                    except:
+                        print('[workeranalyzecontent] Could not analyze player.')
             else:
                 break
     except:
