@@ -12,8 +12,6 @@ PRIVILEDGEDAUTHORS = ['ReaverXai', 'm4rx', 'klopjobacid', 'Decency', '0Hellspawn
 MAXPOSTS = 100
 # This is how many posts you want to retrieve all at once. PRAW can download 100 at a time.
 WAIT = 10
-# This is how many seconds you will wait between cycles. The bot is completely inactive during this time.
-CLEANCYCLES = 10
 # After this many cycles, the bot will clean its database
 # Keeping only the latest (2*MAXPOSTS) items
 
