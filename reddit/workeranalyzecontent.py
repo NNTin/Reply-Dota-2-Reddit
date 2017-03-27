@@ -91,7 +91,7 @@ def analyzeContent(post, isPost):
     replyIntro = ''
 
     replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^message](https://www.reddit.com/message/compose/?to=lumbdi) ^^the ^^owner'
-
+    replyEnd = '[^^source](http://github.com/NNTin/Reply-Dota-2-Reddit) ^^on ^^github, [^^message](https://www.reddit.com/message/compose/?to=lumbdi) ^^the ^^owner ^^on [^^Discord](https://discord.gg/Dkg79tc)'
 
     reply = replyIntro + partialReply + replyEnd
 
@@ -112,7 +112,7 @@ def analyzeContent(post, isPost):
                             message_template = 'https://www.reddit.com/message/compose/?to=' + botName + '&subject=deletion&message={fullname}'
                             delete_link = message_template.format(fullname=my_new_comment.fullname)
 
-                            footer_template = ', [^^deletion ^^link]({url} "Only works for bot summoner and /r/dota2 mods! Do not change already filled out form!")'
+                            footer_template = '^^, [^^deletion ^^link]({url} "Only works for bot summoner and /r/dota2 mods! Do not change already filled out form!")'
                             footer = footer_template.format(url=delete_link)
                             my_new_comment.edit(my_new_comment.body + footer)
 
