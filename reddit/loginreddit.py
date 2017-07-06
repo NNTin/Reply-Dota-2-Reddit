@@ -29,9 +29,9 @@ class LoginReddit:
         getproplayerlist.requestGetProPlayerList()
         if message: print('[loginreddit] updating proPlayerDictionary success')
 
-        if message: print('[loginreddit] updating dota 2 items_game schema')
-        getschema.requestGetSchema()
-        if message: print('[loginreddit] updating dota 2 items_game schema success')
+        #if message: print('[loginreddit] updating dota 2 items_game schema')
+        #getschema.requestGetSchema()
+        #if message: print('[loginreddit] updating dota 2 items_game schema success')
 
 
 
