@@ -1,5 +1,6 @@
 from converter import timeconverter
 from steamapi.getheroes import heroDictionary
+from dataIO import dataIO
 
 def displayResult(matchOdotaJson):
     chatLog = matchOdotaJson['chat']
@@ -13,10 +14,11 @@ def displayResult(matchOdotaJson):
                     'This chat log was provided by [**OpenDota**](https://www.opendota.com/matches/{matchid}/chat)\'s free replay parsing.\n\n'
     chatHeader = 'Player | Time | Message\n' \
                  ':-- | :-- | :--\n'
-    chatLineTemplate = '[](/hero-{heroName}){playerName} | {time} | {message}\n'
+    chatLineTemplate = '[](/hero-{heroName}) {playerName} | {time} | {message}\n'
 
     intro = introTemplate.format(matchid=matchOdotaJson['match_id'])
 
+    print(chatLog)
     chatResult = chatHeader
     for i in range(0, len(chatLog)):
         time = timeconverter.durationTimeConverter(chatLog[i]['time'])
@@ -26,9 +28,15 @@ def displayResult(matchOdotaJson):
         else:
             playerName = ''
 
+        if chatLog[i]['type'] == 'chat':
+            message = chatLog[i]['key']
+        elif chatLog[i]['type'] == 'chatwheel':
+            chatwheelFile = 'data/chatwheel.json'
+            chatwheel = dataIO.load_json(chatwheelFile)
+            message = '▶ ' + chatwheel[chatLog[i]['key']]
 
 
-        chatResult += chatLineTemplate.format(heroName=heroName, playerName=playerName, time=time, message = chatLog[i]['key'])
+        chatResult += chatLineTemplate.format(heroName=heroName, playerName=playerName, time=time, message = message)
 
     return (intro + chatResult + '\n---\n\n')
 
