@@ -29,6 +29,7 @@ def requestGetHeroes():
 
 
     heroDictionary[0] = 'not picked'
+    heroDictionary[108] = 'abyssalunderlord'        #dota2 subreddit naming style....
 
     if message: print('[getheroes] request set heroes success')
 
