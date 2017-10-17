@@ -87,7 +87,7 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=
     intro = intro + 'Analyzed a total of %s matches%s. (%s wins' %(len(detailedMatches), skippedMessage, len(analysis['general']['wins']))
     intro = intro + modeString
     intro = intro + ') '
-    intro = intro + '  \n[Hover over links to display more information.](/a "%s")\n\n' %averageInformation
+    intro = intro + '  \n[Hover over links to display more information.](#a "%s")\n\n' %averageInformation
 
 
 
@@ -97,12 +97,12 @@ def displayResult(playerID, analysis, detailedAnalysis, detailedMatches, getMMR=
 
 
     destroyedBuildings = (analysis['enemyTeam']['tier1'], analysis['enemyTeam']['tier2'], analysis['enemyTeam']['tier3'], analysis['enemyTeam']['tier4'], analysis['enemyTeam']['rangeBarracks'], analysis['enemyTeam']['meleeBarracks'])
-    allyTeamDescription = '[ally team](/a "Ally team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
+    allyTeamDescription = '[ally team](#a "Ally team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
 
     resultTable = resultTable + printTableLine(allyTeamDescription, analysis['allyTeam'], matchesPlayed*5)
 
     destroyedBuildings = (analysis['allyTeam']['tier1'], analysis['allyTeam']['tier2'], analysis['allyTeam']['tier3'], analysis['allyTeam']['tier4'], analysis['allyTeam']['rangeBarracks'], analysis['allyTeam']['meleeBarracks'])
-    enemyTeamDescription = '[enemy team](/a "Enemy team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
+    enemyTeamDescription = '[enemy team](#a "Enemy team destroyed %s tier 1 towers, %s tier 2 towers, %s tier 3 towers, %s tier 4 towers, %s ranged barracks and %s melee barracks")' %destroyedBuildings
 
     resultTable = resultTable + printTableLine(enemyTeamDescription, analysis['enemyTeam'], matchesPlayed*5)
     if(detailedAnalysis):
