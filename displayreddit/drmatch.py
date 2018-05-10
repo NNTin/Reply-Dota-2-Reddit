@@ -5,7 +5,11 @@ from converter import timeconverter, playerconverter
 
 def displayResult(matchJson, playerSummariesJson):
 
-    introTemplate = '####&#009;\n#####&#009; Hover to view match ID: {matchid} [DB](http://www.dotabuff.com/matches/{matchid})/[OD](https://www.opendota.com/matches/{matchid})\n######&#009;\n\n' \
+    introTemplate = '####&#009;\n#####&#009; ' \
+                    'Hover to view match ID: {matchid} [DB](http://www.dotabuff.com/matches/{matchid})/' \
+                    '[OD](https://www.opendota.com/matches/{matchid})/' \
+                    '[STRATZ](https://stratz.com/match/{matchid})' \
+                    '\n######&#009;\n\n' \
                     '[**{teamwinner} wins {winnerkills}-{loserkills} @ {time}**](#lumbdi "{additionalinformation}")\n\n'
     tableTemplate = 'Lvl | Hero | Player| K/D/A | LH/D | XPM | GPM | HD | HH | TD\n' \
                     ':--|:--:|:--|:--|:--|:--|:--|:--|:--|:--\n'

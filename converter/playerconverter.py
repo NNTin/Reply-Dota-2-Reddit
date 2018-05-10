@@ -38,8 +38,9 @@ def playerConverter(playerID, playerSummariesJson=None, includeMMR=False):
         playerName = '%.12s' %proPlayerDictionary[playerID]['name'] #trimming name length because of some people
 
         result += '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/' \
-                  '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis") %s' \
-                  '[%s](#proplayer "name: %s, team name: %s, is locked: %s, sponsor: %s")' %(playerID, playerID,
+                  '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")/' \
+                  '[STRATZ](https://stratz.com/player/%s "STRATZ: Every match, every player, every stat. Free.") %s' \
+                  '[%s](#proplayer "name: %s, team name: %s, is locked: %s, sponsor: %s")' %(playerID, playerID, playerID,
                                                                                           countryFlag,
                                                                                           playerName,
                                                                                           proPlayerDictionary[playerID]['name'],
@@ -51,7 +52,9 @@ def playerConverter(playerID, playerSummariesJson=None, includeMMR=False):
 
     else:
         if playerSummariesJson==None:
-            result = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")' %(playerID, playerID)
+            result = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/' \
+                     '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")/' \
+                     '[STRATZ](https://stratz.com/player/%s "STRATZ: Every match, every player, every stat. Free.")' %(playerID, playerID, playerID)
         else:
             for player in playerSummariesJson['response']['players']:
                 if int(player['steam32id']) == playerID:
@@ -62,7 +65,8 @@ def playerConverter(playerID, playerSummariesJson=None, includeMMR=False):
                     break
 
             result = '[DB](http://dotabuff.com/players/%s "Dotabuff: Lookup people\'s match history")/' \
-                     '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis") %s' %(playerID, playerID, playerName)
+                     '[OD](http://opendota.com/players/%s "OpenDota: Provides free replay analysis")/' \
+                     '[STRATZ](https://stratz.com/player/%s "STRATZ: Every match, every player, every stat. Free.") %s' %(playerID, playerID, playerID, playerName)
 
             result = result.replace('|','').replace('\\','').replace('*','')
         return result
